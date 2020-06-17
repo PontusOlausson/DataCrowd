@@ -1,9 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import BookingView from '../views/Booking.vue';
-import LoginView from '../views/Login.vue';
-import AssistantView from '../views/Assistant.vue';
-import ConfirmationView from '../views/Confirmation.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
