@@ -1,13 +1,13 @@
 
 <template>
-  <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="utterance">
+  <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
     <h1>Fetched utterance to judge!</h1>
-    <div class="row">
-      <div class="well" v-for="utterance in dialogue" :key="utterance.id">
-    <h2>{{ this.utterance.uttr }}</h2>
+    <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.id">
+      <h2>{{ utterance.uttr }}</h2>
+    </div>
     <input class="btn btn-default" type="button"
-     v-on:click="passJudgement(1)" value="Good" />
-     <input class="btn btn-default" type="button"
+      v-on:click="passJudgement(1)" value="Good" />
+    <input class="btn btn-default" type="button"
       v-on:click="passJudgement(0)" value="Bad" />
   </div>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
@@ -25,10 +25,10 @@ export default {
   }),
   methods: {
     fetchDialogue() {
-      fetch('/api/getUtteranceForJudgement')
+      fetch('/api/getDialogueForJudgement')
         .then(res => res.json())
         .then((data) => {
-          this.utterance = data.utterance;
+          this.dialogue = data.dialogue;
         })
         .catch(console.error);
     },
@@ -39,16 +39,16 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uttrID: this.utterance.id,
-          score: score,
+          uttrID: this.dialogue.utterances[this.dialogue.utterances.length - 1].id,
+          score,
         }),
       })
-      .then((resp) => {
-        if (resp.ok) {
-          this.fetchDialogue();
-        }
-      })
-      .catch(console.error);
+        .then((resp) => {
+          if (resp.ok) {
+            this.fetchDialogue();
+          }
+        })
+        .catch(console.error);
     },
   },
   created() {

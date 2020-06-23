@@ -30,7 +30,17 @@ router.post('/passJudgement', (req, res) => {
 router.get('/getUtteranceForJudgement', (req, res) => {
   model.getUtteranceForJudgement(req.session.userID)
     .then((uttr) => {
-      res.status(200).json({ utterance: uttr});
+      res.status(200).json({ utterance: uttr, });
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+router.get('/getDialogueForJudgement', (req, res) => {
+  model.getDialogueForJudgement(req.session.userID)
+    .then((dialogue) => {
+      res.status(200).json({ dialogue: dialogue, });
     })
     .catch((err) => {
       throw err;

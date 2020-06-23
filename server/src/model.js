@@ -38,7 +38,7 @@ exports.addUser = (id, admin) => {
 */
 exports.findUser = (id) => new Promise((resolve, reject) => {
   if (id == null) { return resolve(undefined); }
-  db.query('SELECT * FROM users WHERE id = ?', id, (err, result) => {
+  db.query(queries.findUser, id, (err, result) => {
     if (err) { reject(err); } else { resolve(result[0]); }
   });
 });
@@ -91,6 +91,42 @@ exports.getDialogues = () => new Promise((resolve, reject) => {
 * @returns {User}
 */
 exports.getUtteranceForJudgement = (userID) => new Promise((resolve, reject) => {
+  db.query(queries.getUtteranceForJudgement, userID, (err, result) => {
+    if (err) { reject(err); }
+    if (result.length > 0) {
+      result = result[0];
+      const utterance = new Utterance(
+        result.id, result.userID, result.responseTo, result.type, result.uttr, result.botAnswer, null, null
+      );
+      resolve(utterance);
+    }
+    else {
+      resolve(null);  // no utterance available to judge.
+    }
+  });
+});
+
+function constructDialogue(dialogue, utterance) {
+  if (utterance.responseTo != null) {
+    db.query(queries.getUtterance, utterance.responseTo, (err, result) => {
+      if (err) { reject(err); }
+      if (result.length > 0) {
+        result = result[0];
+        newUtterance = new Utterance(
+          result.id, result.userID, result.responseTo, result.type, result.uttr, result.botAnswer, null, null
+        );
+        dialogue = constructDialogue(dialogue, newUtterance);
+      }
+    });
+  }
+
+  dialogue.addUtterance(utterance);
+  return dialogue;
+}
+
+exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
+  var dialogue = new Dialogue();
+
   db.query(queries.getUtteranceForJudgement, userID, (err, item) => {
     if (err) { reject(err); }
     if (item.length > 0) {
@@ -98,7 +134,10 @@ exports.getUtteranceForJudgement = (userID) => new Promise((resolve, reject) => 
       const utterance = new Utterance(
         item.id, item.userID, item.responseTo, item.type, item.uttr, item.botAnswer, null, null
       );
-      resolve(utterance);
+      dialogue = constructDialogue(dialogue, utterance);
+      // console.debug('Finished with scary code');
+      // console.debug(dialogue.utterances);
+      resolve(dialogue);
     }
     else {
       resolve(null);  // no utterance available to judge.

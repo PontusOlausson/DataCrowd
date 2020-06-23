@@ -16,3 +16,4 @@ exports.getUtteranceForJudgement = 'SELECT * \
  WHERE j.uttrID IS NULL \
  LIMIT 1';
 exports.addJudgement = 'INSERT INTO judgements (uttrID, userID, score) VALUES (?, ?, ?)';
+exports.getUtterance = 'SELECT * FROM userUtterances WHERE id = ? LIMIT 1'
