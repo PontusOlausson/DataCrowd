@@ -114,14 +114,6 @@ button:focus {
   cursor: default;
 }
 
-.booked {
-  background-color: #FF0000;
-}
-
-.reserved {
-  background-color: #FF4500;
-}
-
 div.light-blue-background {
   background-color: #c5e7ff;
 }

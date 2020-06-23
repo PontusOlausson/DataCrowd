@@ -46,7 +46,7 @@ const requireAdmin = (req, res, next) => {
         res.status(401).send('Unauthorized. Please make sure you are logged in as admin before attempting this action again.');
         return;
       }
-      
+
       next();
     })
     .catch((err) => {

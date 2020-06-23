@@ -2,6 +2,8 @@
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="utterance">
     <h1>Fetched utterance to judge!</h1>
+    <div class="row">
+      <div class="well" v-for="utterance in dialogue" :key="utterance.id">
     <h2>{{ this.utterance.uttr }}</h2>
     <input class="btn btn-default" type="button"
      v-on:click="passJudgement(1)" value="Good" />
@@ -18,11 +20,11 @@ export default {
   name: 'Judgement',
   components: {},
   data: () => ({
-    utterance: null,
+    dialogue: null,
     status: '',
   }),
   methods: {
-    fetchUtterance() {
+    fetchDialogue() {
       fetch('/api/getUtteranceForJudgement')
         .then(res => res.json())
         .then((data) => {
@@ -31,7 +33,6 @@ export default {
         .catch(console.error);
     },
     passJudgement(score) {
-      console.log('test');
       fetch('/api/passJudgement', {
         method: 'POST',
         headers: {
@@ -44,14 +45,14 @@ export default {
       })
       .then((resp) => {
         if (resp.ok) {
-          this.fetchUtterance();
+          this.fetchDialogue();
         }
       })
       .catch(console.error);
     },
   },
   created() {
-    this.fetchUtterance();
+    this.fetchDialogue();
   },
 };
 </script>

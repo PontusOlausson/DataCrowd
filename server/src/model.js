@@ -3,7 +3,9 @@
 'use strict';
 
 const Utterance = require('./models/utterance.model');
+const Dialogue = require('./models/dialogue.model');
 const db = require('./database');
+const queries = require('./queries');
 
 // Will be initialized in the exports.init function
 exports.io = undefined;
@@ -24,11 +26,9 @@ exports.init = ({ io }) => {
  * @returns {void}
  */
 exports.addUser = (id, admin) => {
-  const statement = db.prepare('INSERT INTO users (id, admin) VALUES (?, ?)');
-  statement.run(id, admin, (err) => {
+  db.query(queries.addUser, (err) => {
     if (err) { throw new Error(err); }
   });
-  statement.finalize();
 };
 
 /**
@@ -37,36 +37,28 @@ exports.addUser = (id, admin) => {
 * @returns {User}
 */
 exports.findUser = (id) => new Promise((resolve, reject) => {
-  const statement = db.prepare('SELECT * FROM users WHERE (id) = (?)');
-  statement.get(id, (err, result) => {
-    if (err) { reject(new Error(err)); } else { resolve(result); }
+  if (id == null) { return resolve(undefined); }
+  db.query('SELECT * FROM users WHERE id = ?', id, (err, result) => {
+    if (err) { reject(err); } else { resolve(result[0]); }
   });
 });
 
-exports.getUsers = (id) => new Promise((resolve, reject) => {
-  const statement = db.prepare('SELECT * FROM users');
-  statement.get(id, (err, result) => {
-    if (err) { reject(new Error(err)); } else { resolve(result); }
+exports.getUsers = () => new Promise((resolve, reject) => {
+  db.query(queries.getUsers, (err, result) => {
+    if (err) { reject(err); } else { resolve(result); }
   });
 });
 
 exports.addUserUtterance = (uttr, userID, responseTo, type) => new Promise((resolve, reject) => {
-  const statement = db.prepare('INSERT INTO userUtterances \
-   (uttr, userID, responseTo, type) VALUES (?, ?, ?, ?)');
-  statement.run(uttr, userID, responseTo, type, (err) => {
-    if (err) { throw new Error(err); }
+  // TODO: should this really be a promise?
+  db.query(queries.addUserUtterance, [uttr, userID, responseTo, type], (err) => {
+    if (err) { reject(err) } else { resolve(); }
   });
 });
 
 exports.getUserUtterances = () => new Promise((resolve, reject) => {
   const utterances = {};
-  db.all('SELECT userUtterances.*, \
-   COUNT(judgements.uttrID) as j_count, \
-   AVG(judgements.score) as score \
-   FROM userUtterances \
-   LEFT OUTER JOIN judgements ON userUtterances.id = judgements.uttrID \
-   GROUP BY userUtterances.id \
-   ORDER BY userUtterances.id', (err, rows) => {
+  db.query(queries.getUserUtterances, (err, rows) => {
     if (err) { reject(err); }
 
     const bar = new Promise((resolve) => {
@@ -82,7 +74,15 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
     return bar.then(() => {
       resolve(utterances);
     });
-  });
+  })
+});
+
+/**
+* Returns the user object with the given id.
+* @returns {Dialogue[]}
+*/
+exports.getDialogues = () => new Promise((resolve, reject) => {
+  const dialogues = [];
 });
 
 /**
@@ -91,14 +91,10 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
 * @returns {User}
 */
 exports.getUtteranceForJudgement = (userID) => new Promise((resolve, reject) => {
-  const statement = db.prepare('SELECT * \
-  FROM userUtterances \
-  LEFT OUTER JOIN (SELECT uttrID FROM judgements WHERE userID = (?)) AS j ON userUtterances.id = j.uttrID \
-  WHERE j.uttrID IS NULL');
-
-  statement.get(userID, (err, item) => {
+  db.query(queries.getUtteranceForJudgement, userID, (err, item) => {
     if (err) { reject(err); }
-    if (item) {
+    if (item.length > 0) {
+      item = item[0];
       const utterance = new Utterance(
         item.id, item.userID, item.responseTo, item.type, item.uttr, item.botAnswer, null, null
       );
@@ -108,15 +104,12 @@ exports.getUtteranceForJudgement = (userID) => new Promise((resolve, reject) => 
       resolve(null);  // no utterance available to judge.
     }
   });
-  statement.finalize();
 });
 
 
 exports.addJudgement = (uttrID, userID, score) => {
-  const statement = db.prepare('INSERT INTO judgements (uttrID, userID, score) VALUES (?, ?, ?)');
-  statement.run(uttrID, userID, score, (err) => {
+  db.query(queries.addJudgement, [uttrID, userID, score], (err) => {
     if (err) { throw err; }
     console.debug('added judgement');
   });
-  statement.finalize();
 }
