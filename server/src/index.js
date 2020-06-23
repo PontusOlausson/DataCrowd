@@ -62,8 +62,13 @@ This will serve static files from the public directory, starting with index.html
 
 // Bind REST controllers to /api/*
 const auth = require('./controllers/auth.controller.js');
+const admin = require('./controllers/admin.controller.js');
+const crowd = require('./controllers/crowd.controller.js');
 
 app.use('/api', auth.router);
+app.use('/api', auth.requireAdmin, admin.router);
+app.use('/api', auth.requireAuth, crowd.router);
+
 
 // Init model
 const model = require('./model.js');

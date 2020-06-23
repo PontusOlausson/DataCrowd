@@ -16,10 +16,10 @@
             <span class="icon-bar"></span>
           </button>
           <div
-            v-on:click="redirect('/list')"
+            v-on:click="redirect('/')"
             class="navbar-brand navbar-brand-centered"
             style="line-height: 1em; cursor: pointer;"
-          >Example</div>
+          >Home</div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -28,8 +28,11 @@
             <li v-on:click="redirect('/login')">
               <a style="cursor: pointer;">Login</a>
             </li>
-            <li v-on:click="redirect('/list')">
-              <a style="cursor: pointer;">Booking</a>
+            <li v-on:click="redirect('/genUttr')">
+              <a style="cursor: pointer;">Generate utterance</a>
+            </li>
+            <li v-on:click="redirect('/judge')">
+              <a style="cursor: pointer;">Judge</a>
             </li>
           </ul>
         </div>

@@ -1,11 +1,19 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import LoginView from '../views/Login.vue';
+import AdminView from '../views/Admin.vue';
+import GenUttrView from '../views/GenerateUtterance.vue';
+import JudgementView from '../views/Judgement.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', redirect: '/list' },
+  { path: '/', redirect: '/genUttr' },
+  { path: '/login', component: LoginView },
+  { path: '/admin', component: AdminView },
+  { path: '/genUttr', component: GenUttrView },
+  { path: '/judge', component: JudgementView },
 ];
 
 const router = new VueRouter({

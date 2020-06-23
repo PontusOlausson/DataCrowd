@@ -35,6 +35,25 @@ const requireAuth = (req, res, next) => {
     });
 };
 
+const requireAdmin = (req, res, next) => {
+  model.findUser(req.session.userID)
+    .then((maybeUser) => {
+      // "auth" check
+      if (maybeUser === undefined) {
+        res.status(401).send('Unauthorized. Please make sure you are logged in before attempting this action again.');
+        return;
+      } else if (maybeUser.admin != 1) {
+        res.status(401).send('Unauthorized. Please make sure you are logged in as admin before attempting this action again.');
+        return;
+      }
+      
+      next();
+    })
+    .catch((err) => {
+      throw (err);
+    });
+};
+
 /**
  * Tells the client if they are in an authenticated user-session.
  * @param {String} req.session.userID - A string that uniquely identifies the given user.
@@ -45,7 +64,7 @@ router.get('/isAuthenticated', (req, res) => {
     .then((maybeUser) => {
       res.status(200).json({
         isAuthenticated: maybeUser !== undefined,
-        username: maybeUser !== undefined ? maybeUser.name : 'N/A',
+        userID: maybeUser !== undefined ? maybeUser.id : 'N/A',
       });
     })
     .catch((err) => {
@@ -55,51 +74,25 @@ router.get('/isAuthenticated', (req, res) => {
 
 /**
  * Attempts to authenticate the user-session
- * @param {String} req.body.username - The username of the user attempting to authenticate
- * @param {String} req.body.password - The password of the user attempting to authenticate
+ * @param {String} req.body.userID - The username of the user attempting to authenticate
  * @param {String} req.session.userID - A string that uniquely identifies the given user.
  * @returns {void}
  */
 router.post('/authenticate', (req, res) => {
-  model.findUser(req.body.username)
+  model.findUser(req.body.userID)
     .then((user) => {
       if (user) {
-        bcrypt.compare(req.body.password, user.hash, (err, result) => {
-          if (result === true) {
-            req.session.userID = req.body.username;
-            req.session.save((error) => {
-              if (error) console.error(error);
-              else console.debug(`Saved userID: ${req.session.userID}`);
-            });
-            res.sendStatus(200);
-          } else { res.status(401).send(`Incorrect password ${req.body.password}.`); }
-        });
-      } else { res.status(401).send(`No existing assistant with name ${req.body.username}.`); }
-    })
-    .catch((err) => {
-      throw err;
-    });
-});
-
-
-// TODO: Add 'create account' route.
-// The 'authenticate' route is only supposed to check if the user can login.
-router.post('/registerUser', (req, res) => {
-  model.findUser(req.body.username)
-    .then((maybeUser) => {
-      if (maybeUser !== undefined) {
-        console.debug(`Assistant with name ${req.body.username} already exists.`);
-        res.sendStatus(400);
-      } else {
-        bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-          model.addUser(req.body.username, hash);
+        req.session.userID = req.body.userID;
+        req.session.save((error) => {
+          if (error) console.error(error);
+          else console.debug(`Saved userID: ${req.session.userID}`);
         });
         res.sendStatus(200);
-      }
+      } else { res.status(401).send(`No existing user with name ${req.body.userID}.`); }
     })
     .catch((err) => {
       throw err;
     });
 });
 
-module.exports = { router, requireAuth };
+module.exports = { router, requireAuth, requireAdmin };

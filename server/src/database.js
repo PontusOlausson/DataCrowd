@@ -5,8 +5,12 @@ const databasePath = path.join(__dirname, 'db.sqlite');
 const db = new sqlite3.Database(databasePath);
 
 db.serialize(() => {
+  db.run('DROP TABLE IF EXISTS userUtterances');
+  db.run('DROP TABLE IF EXISTS judgements');
+
   db.run('CREATE TABLE IF NOT EXISTS users ( \
-    id TEXT PRIMARY KEY \
+    id TEXT PRIMARY KEY, \
+    admin INTEGER \
   )');
 
   db.run('CREATE TABLE IF NOT EXISTS templates ( \
