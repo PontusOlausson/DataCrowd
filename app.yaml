@@ -5,10 +5,11 @@ handlers:
 - url: /(.*\..+)$
   static_files: dist/\1
   upload: dist/(.*\..+)$
+
   # catch all handler to index.html
 - url: /.*
-  static_files: dist/index.html
-  upload: dist/index.html
+  static_files: client/src/index.html
+  upload: client/dist/index.html
 
 beta_settings:
   cloud_sql_instances: dialogdata:europe-north1:dialogdata-mysql
