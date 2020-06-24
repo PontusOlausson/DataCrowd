@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 
 let connection = mysql.createConnection({
+  host: 'localhost',
   user: 'TestUser',
   password: 'securePassword',
   database: 'dialogdata_db',
