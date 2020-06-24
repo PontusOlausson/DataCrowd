@@ -17,7 +17,7 @@ router.post('/submitUtterance', (req, res) => {
     return;
   }
 
-  model.addUserUtterance(utterance, req.session.userID, req.body.responseTo, req.body.type);
+  model.addUserUtterance(utterance, req.session.userID, req.body.responseTo);
 
   res.status(201).send('The utterance was successfully submitted!');
 });

@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 
 let connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'ilqwhJacce1',
-  database: 'datacrowd'
+  host: '35.228.147.168',
+  user: 'TestUser',
+  password: 'securePassword',
+  database: 'dialogdata_db'
 });
 
 connection.connect((err) => {

@@ -12,6 +12,7 @@
   </div>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
     <h2>Seems like there is currently no utterance that you can judge :(</h2>
+    <h3>Try generating some new instead!</h3>
   </div>
 </template>
 
