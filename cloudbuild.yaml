@@ -10,8 +10,5 @@ steps:
   entrypoint: npm
   args: ['install']
   dir: 'client/'
-- name: node
-  entrypoint: npm
-  args: ['start']
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
