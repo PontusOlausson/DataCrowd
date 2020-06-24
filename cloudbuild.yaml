@@ -4,4 +4,12 @@ steps:
   args: ['install']
 - name: node
   entrypoint: npm
+  args: ['install']
+  dir: 'server/'
+- name: node
+  entrypoint: npm
+  args: ['install']
+  dir: 'client/'
+- name: node
+  entrypoint: npm
   args: ['start']
