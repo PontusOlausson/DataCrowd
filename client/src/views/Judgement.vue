@@ -2,7 +2,7 @@
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
     <h1>Fetched utterance to judge!</h1>
-    <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.id">
+    <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.uttrID">
       <h2>{{ utterance.uttr }}</h2>
     </div>
     <input class="btn btn-default" type="button"
@@ -40,7 +40,7 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uttrID: this.dialogue.utterances[this.dialogue.utterances.length - 1].id,
+          uttrID: this.dialogue.utterances[this.dialogue.utterances.length - 1].uttrID,
           score,
         }),
       })

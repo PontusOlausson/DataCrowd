@@ -64,7 +64,7 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
     const bar = new Promise((resolve) => {
       rows.forEach((item) => {
         const utterance = new Utterance(
-          item.uttrID, item.userID, item.responseTo, item.type, item.uttr, item.botAnswer, item.j_count, item.score
+          item.uttrID, item.userID, item.responseTo, item.uttr, item.botAnswer, item.votes, item.score
         );
         utterances[item.uttrID] = utterance;
       });
@@ -92,7 +92,7 @@ function constructDialogue(dialogue, utterance) {
       if (result.length > 0) {
         result = result[0];
         newUtterance = new Utterance(
-          result.uttrID, result.userID, result.responseTo, result.type, result.uttr, result.botAnswer, null, null
+          result.uttrID, result.userID, result.responseTo, result.uttr, result.botAnswer
         );
         dialogue = constructDialogue(dialogue, newUtterance);
       }
@@ -111,7 +111,7 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
     if (result.length > 0) {
       result = result[0];
       const utterance = new Utterance(
-        result.uttrID, result.userID, result.responseTo, result.type, result.uttr, result.botAnswer, null, null
+        result.uttrID, result.userID, result.responseTo, result.uttr, result.botAnswer
       );
       dialogue = constructDialogue(dialogue, utterance);
       // console.debug('Finished with scary code');

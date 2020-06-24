@@ -9,7 +9,7 @@
         <div class="well" v-for="utterance in userUtterances" :key="utterance.id">
           <div class="row" style="text-align: center;">
             <h4>
-              <span>Uttr: {{ utterance.uttr }}, j_count: {{ utterance.j_count }}, score: {{ utterance.score }}</span>
+              <span>Uttr: {{ utterance.uttr }}, votes: {{ utterance.votes }}, score: {{ utterance.score }}</span>
             </h4>
           </div>
         </div>

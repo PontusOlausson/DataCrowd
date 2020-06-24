@@ -6,14 +6,13 @@
  * @class Utterance
  */
 class Utterance {
-  constructor(id, userID, responseTo, features, uttr = null, botAnswer = null, j_count, score) {
-    this.id = id;
+  constructor(uttrID, userID, responseTo, uttr, botAnswer = null, votes = null, score = null) {
+    this.uttrID = uttrID;
     this.userID = userID;
     this.responseTo = responseTo;
-    this.features = features;
     this.uttr = uttr;
     this.botAnswer = botAnswer;
-    this.j_count = j_count
+    this.votes = votes
     this.score = score
   }
 }
