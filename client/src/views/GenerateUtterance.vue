@@ -34,7 +34,9 @@ export default {
           if (resp.ok) return resp;
           resp.text().then((text) => {
             this.status = text;
+            return text;
           });
+          return resp;
         })
         .then(() => {
 
@@ -43,7 +45,7 @@ export default {
           throw error;
         });
 
-      document.getElementById("genUttrForm").reset();
+      document.getElementById('genUttrForm').reset();
     },
   },
 };
