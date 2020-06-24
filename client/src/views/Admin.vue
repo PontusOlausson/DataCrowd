@@ -9,7 +9,11 @@
         <div class="well" v-for="utterance in userUtterances" :key="utterance.id">
           <div class="row" style="text-align: center;">
             <h4>
-              <span>Uttr: {{ utterance.uttr }}, votes: {{ utterance.votes }}, score: {{ utterance.score }}</span>
+              <span>
+                Uttr: {{ utterance.uttr }},
+                votes: {{ utterance.votes }},
+                score: {{ utterance.score }}
+              </span>
             </h4>
           </div>
         </div>
@@ -51,20 +55,19 @@ export default {
     },
   },
   created() {
+    fetch('/api/getUsers')
+      .then(res => res.json())
+      .then((data) => {
+        this.users = data.users;
+      })
+      .catch(console.error);
 
-  fetch('/api/getUsers')
-    .then(res => res.json())
-    .then((data) => {
-      this.users = data.users;
-    })
-    .catch(console.error);
-
-  fetch('/api/getUserUtterances')
-    .then(res => res.json())
-    .then((data) => {
-      this.userUtterances = data.userUtterances;
-    })
-    .catch(console.error);
+    fetch('/api/getUserUtterances')
+      .then(res => res.json())
+      .then((data) => {
+        this.userUtterances = data.userUtterances;
+      })
+      .catch(console.error);
   },
 };
 </script>
