@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 
-let connection = mysql.createConnection({
+let pool = mysql.createPool({
   host: '35.228.147.168',
   user: 'TestUser',
   password: 'securePassword',
@@ -8,9 +8,9 @@ let connection = mysql.createConnection({
   // socketPath: '/cloudsql/dialogdata:europe-north1:dialogdata-mysql'
 });
 
-connection.connect((err) => {
-  if (err) { throw err; }
-  console.log('Connected to MySQL database!');
-});
+// connection.connect((err) => {
+//   if (err) { throw err; }
+//   console.log('Connected to MySQL database!');
+// });
 
-module.exports = connection;
+module.exports = pool;
