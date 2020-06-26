@@ -34,6 +34,9 @@
             <li v-on:click="redirect('/judge')">
               <a style="cursor: pointer;">Judge</a>
             </li>
+            <li v-on:click="redirect('/sysres')">
+              <a style="cursor: pointer;">Choose system response</a>
+            </li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->
