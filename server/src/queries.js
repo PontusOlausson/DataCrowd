@@ -14,9 +14,11 @@ exports.getUserUtterances = 'SELECT userUtterances.*, \
 exports.getUtteranceForJudgement = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score \
+  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
   	FROM userUtterances LEFT OUTER JOIN judgements \
   	ON userUtterances.uttrID = judgements.uttrID \
+    LEFT OUTER JOIN templates \
+    ON userUtterances.systemResponse = templates.templateID \
   	GROUP BY userUtterances.uttrID \
     HAVING votes < ? \
   ) AS u \
@@ -29,9 +31,11 @@ exports.getUtteranceForJudgement = 'SELECT u.* \
 exports.getUtteranceForSystemResponse = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score \
+  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
   	FROM userUtterances LEFT OUTER JOIN judgements \
   	ON userUtterances.uttrID = judgements.uttrID \
+    LEFT OUTER JOIN templates \
+    ON userUtterances.systemResponse = templates.templateID \
   	WHERE userUtterances.systemResponse IS NULL \
   	GROUP BY userUtterances.uttrID \
   	HAVING votes >= ? AND score >= ? \
@@ -44,7 +48,11 @@ exports.getUtteranceForSystemResponse = 'SELECT u.* \
   WHERE s.uttrID IS NULL \
   LIMIT 1';
 exports.addJudgement = 'INSERT INTO judgements (uttrID, userID, score) VALUES (?, ?, ?)';
-exports.getUtterance = 'SELECT * FROM userUtterances WHERE uttrID = ? LIMIT 1';
+exports.getUtterance = 'SELECT userUtterances.*, template AS systemResponseText \
+  FROM userUtterances \
+  LEFT OUTER JOIN templates \
+  ON userUtterances.systemResponse = templates.templateID \
+  WHERE userUtterances.uttrID = ?';
 exports.addSystemResponse = 'INSERT INTO systemResponses (templateID, uttrID, userID) VALUES (?, ?, ?)';
 exports.getSystemResponsesRanked = 'SELECT templateID, COUNT(templateID) AS votes \
   FROM systemResponses \
@@ -56,7 +64,10 @@ exports.updateSystemResponse = 'UPDATE userUtterances SET systemResponse = ? WHE
 exports.getUtteranceForUserResponse = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT * FROM userUtterances \
+  	SELECT userUtterances.*, template AS systemResponseText \
+    FROM userUtterances \
+    LEFT OUTER JOIN templates \
+    ON userUtterances.systemResponse = templates.templateID \
   	WHERE systemResponse IS NOT NULL \
   ) AS u \
   LEFT OUTER JOIN \

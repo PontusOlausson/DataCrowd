@@ -65,7 +65,13 @@ router.post('/addSystemResponse', (req, res) => {
 });
 
 router.get('/getDialogueForUserResponse', (req, res) => {
-
+  model.getDialogueForUserResponse(req.session.userID)
+    .then((dialogue) => {
+      res.status(200).json({ dialogue: dialogue, });
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 module.exports = { router };

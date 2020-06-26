@@ -4,6 +4,9 @@
     <h1>Fetched utterance waiting for response!</h1>
     <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.uttrID">
       <h2>{{ utterance.uttr }}</h2>
+      <h4 v-if="utterance.systemResponseText">
+        System response: {{ utterance.systemResponseText }}
+      </h4>
     </div>
     <div>
       <h2>Which of the following responses is the best fit?</h2>
@@ -48,10 +51,8 @@ export default {
           uttrID: this.dialogue.utterances[this.dialogue.utterances.length - 1].uttrID,
         }),
       })
-        .then((resp) => {
-          if (resp.ok) {
-            this.fetchDialogue();
-          }
+        .then(() => {
+          this.fetchDialogue();
         })
         .catch(console.error);
     },

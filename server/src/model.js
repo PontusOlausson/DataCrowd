@@ -70,7 +70,7 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
     const bar = new Promise((resolve) => {
       rows.forEach((item) => {
         const utterance = new Utterance(
-          item.uttrID, item.userID, item.responseTo, item.uttr, item.systemResponse, item.votes, item.score
+          item.uttrID, item.userID, item.responseTo, item.uttr, item.systemResponse, null, item.votes, item.score
         );
         utterances[item.uttrID] = utterance;
       });
@@ -83,31 +83,37 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
   })
 });
 
-/**
-* Returns the user object with the given id.
-* @returns {Dialogue[]}
-*/
-exports.getDialogues = () => new Promise((resolve, reject) => {
-  const dialogues = [];
+// riktig mörk magi händer här
+// be till gudarna att det aldrig krånglar
+const constructDialogue = (dialogue, utterance) => new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (utterance.responseTo != null) {
+      db.query(queries.getUtterance, utterance.responseTo, (err, result) => {
+        if (err) { reject(err); }
+        else {
+          result = result[0];
+          const new_utterance = new Utterance(
+            result.uttrID, result.userID, result.responseTo,
+            result.uttr, result.systemResponse, result.systemResponseText
+          );
+
+          // rekursivt anrop som verkar jätteläskigt
+          constructDialogue(dialogue, new_utterance)
+            .then((finished_dialogue) => { resolve(finished_dialogue); })
+            .catch((err) => { reject(err); });
+        }
+      });
+    }
+    else {
+      resolve(dialogue);
+    }
+  })
+  .then((new_dialogue) => {
+    new_dialogue.addUtterance(utterance);
+    resolve(new_dialogue);
+  })
+  .catch((err) => { reject(err); });
 });
-
-function constructDialogue(dialogue, utterance) {
-  if (utterance.responseTo != null) {
-    db.query(queries.getUtterance, utterance.responseTo, (err, result) => {
-      if (err) { reject(err); }
-      if (result.length > 0) {
-        result = result[0];
-        newUtterance = new Utterance(
-          result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
-        );
-        dialogue = constructDialogue(dialogue, newUtterance);
-      }
-    });
-  }
-
-  dialogue.addUtterance(utterance);
-  return dialogue;
-}
 
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   var dialogue = new Dialogue();
@@ -119,10 +125,10 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
       const utterance = new Utterance(
         result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
       );
-      dialogue = constructDialogue(dialogue, utterance);
-      // console.debug('Finished with scary code');
-      // console.debug(dialogue.utterances);
-      resolve(dialogue);
+
+      constructDialogue(dialogue, utterance)
+        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .catch((err) => { reject(err); });
     }
     else {
       resolve(null);  // no utterance available to judge.
@@ -140,8 +146,9 @@ exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject)
       const utterance = new Utterance(
         result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
       );
-      dialogue = constructDialogue(dialogue, utterance);
-      resolve(dialogue);
+      constructDialogue(dialogue, utterance)
+        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .catch((err) => { reject(err); });
     }
     else {
       resolve(null);  // no utterance available to judge.
@@ -175,15 +182,18 @@ exports.updateSystemResponsToUtterance = (uttrID) => {
 exports.getDialogueForUserResponse = (userID) => new Promise((resolve, reject) => {
   var dialogue = new Dialogue();
 
-  db.query(queires.getUtteranceForUserResponse, [userID, 3, 3, 0.6], (err, result) => {
+  db.query(queries.getUtteranceForUserResponse, [userID, 3, 3, 0.6], (err, result) => {
     if (err) { return reject(err) }
     if (result.length > 0) {
       result = result[0];
       const utterance = new Utterance(
-        result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
+        result.uttrID, result.userID, result.responseTo,
+        result.uttr, result.systemResponse, result.systemResponseText
       );
-      dialogue = constructDialogue(dialogue, utterance);
-      resolve(dialogue);    }
+      constructDialogue(dialogue, utterance)
+        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .catch((err) => { reject(err); });
+    }
     else {
       resolve(null);
     }

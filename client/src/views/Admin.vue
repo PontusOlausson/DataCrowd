@@ -2,7 +2,7 @@
   <div class="container">
     <section class="col-md-10 col-md-offset-1">
       <div class="row" style="text-align: center;">
-        <h1>Hello {{ userID }}!</h1>
+        <h1>Welcome to the admin page!</h1>
       </div>
 
       <div class="row">
@@ -10,22 +10,17 @@
           <div class="row" style="text-align: center;">
             <h4>
               <span>
-                Uttr: {{ utterance.uttr }},
+                Uttr: {{ utterance.uttr }} <br>
                 votes: {{ utterance.votes }},
                 score: {{ utterance.score }}
+                <div v-if="utterance.systemResponse">
+                  system response: {{ utterance.systemResponse }}
+                </div>
               </span>
             </h4>
           </div>
         </div>
       </div>
-
-      <div class="row" style="text-align: center;">
-        <h1>Add a user!</h1>
-      </div>
-      <form v-on:submit.prevent="addUser()">
-        <input class="form-control" type="text" v-model="userID" required autofocus />
-        <input class="btn btn-default" type="submit" value="Ok" />
-      </form>
     </section>
   </div>
 </template>
@@ -37,8 +32,6 @@ export default {
   data() {
     return {
       userUtterances: {},
-      users: {},
-      userID: '',
     };
   },
   methods: {

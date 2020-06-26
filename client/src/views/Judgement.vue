@@ -3,7 +3,12 @@
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
     <h1>Fetched utterance to judge!</h1>
     <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.uttrID">
-      <h2>{{ utterance.uttr }}</h2>
+      <h3>
+        User utterance: {{ utterance.uttr }}
+      </h3>
+      <h4 v-if="utterance.systemResponseText">
+        System response: {{ utterance.systemResponseText }}
+      </h4>
     </div>
     <input class="btn btn-default" type="button"
       v-on:click="passJudgement(1)" value="Good" />
@@ -44,12 +49,10 @@ export default {
           score,
         }),
       })
-        .then((resp) => {
-          if (resp.ok) {
-            this.fetchDialogue();
-          }
-        })
-        .catch(console.error);
+      .then(() => {
+        this.fetchDialogue();
+      })
+      .catch(console.error);
     },
   },
   created() {
