@@ -27,15 +27,6 @@ router.post('/passJudgement', (req, res) => {
   res.sendStatus(201);
 });
 
-router.get('/getUtteranceForJudgement', (req, res) => {
-  model.getUtteranceForJudgement(req.session.userID)
-    .then((uttr) => {
-      res.status(200).json({ utterance: uttr, });
-    })
-    .catch((err) => {
-      throw err;
-    });
-});
 
 router.get('/getDialogueForJudgement', (req, res) => {
   model.getDialogueForJudgement(req.session.userID)
@@ -45,6 +36,36 @@ router.get('/getDialogueForJudgement', (req, res) => {
     .catch((err) => {
       throw err;
     });
+});
+
+router.get('/getDialogueForSystemResponse', (req, res) => {
+  model.getDialogueForSystemResponse(req.session.userID)
+    .then((dialogue) => {
+      res.status(200).json({ dialogue: dialogue, });
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+router.get('/getTemplates', (req, res) => {
+  model.getTemplates()
+    .then((templates) => {
+      res.status(200).json({ templates: templates, });
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+router.post('/addSystemResponse', (req, res) => {
+  model.addSystemResponse(req.body.templateID, req.body.uttrID, req.session.userID);
+  model.updateSystemResponsToUtterance(req.body.uttrID);
+  res.sendStatus(201);
+});
+
+router.get('/getDialogueForUserResponse', (req, res) => {
+
 });
 
 module.exports = { router };

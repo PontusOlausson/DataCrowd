@@ -49,6 +49,12 @@ exports.getUsers = () => new Promise((resolve, reject) => {
   });
 });
 
+exports.getTemplates = () => new Promise((resolve, reject) => {
+  db.query(queries.getTemplates, (err, result) => {
+    if (err) { reject(err); } else { resolve(result); }
+  });
+});
+
 exports.addUserUtterance = (uttr, userID, responseTo) => new Promise((resolve, reject) => {
   // TODO: should this really be a promise?
   db.query(queries.addUserUtterance, [uttr, userID, responseTo], (err) => {
@@ -64,7 +70,7 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
     const bar = new Promise((resolve) => {
       rows.forEach((item) => {
         const utterance = new Utterance(
-          item.uttrID, item.userID, item.responseTo, item.uttr, item.botAnswer, item.votes, item.score
+          item.uttrID, item.userID, item.responseTo, item.uttr, item.systemResponse, item.votes, item.score
         );
         utterances[item.uttrID] = utterance;
       });
@@ -92,7 +98,7 @@ function constructDialogue(dialogue, utterance) {
       if (result.length > 0) {
         result = result[0];
         newUtterance = new Utterance(
-          result.uttrID, result.userID, result.responseTo, result.uttr, result.botAnswer
+          result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
         );
         dialogue = constructDialogue(dialogue, newUtterance);
       }
@@ -106,12 +112,12 @@ function constructDialogue(dialogue, utterance) {
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   var dialogue = new Dialogue();
 
-  db.query(queries.getUtteranceForJudgement, userID, (err, result) => {
-    if (err) { reject(err); }
+  db.query(queries.getUtteranceForJudgement, [3, userID], (err, result) => {
+    if (err) { return reject(err); }
     if (result.length > 0) {
       result = result[0];
       const utterance = new Utterance(
-        result.uttrID, result.userID, result.responseTo, result.uttr, result.botAnswer
+        result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
       );
       dialogue = constructDialogue(dialogue, utterance);
       // console.debug('Finished with scary code');
@@ -124,10 +130,62 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   });
 });
 
+exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject) => {
+  var dialogue = new Dialogue();
+
+  db.query(queries.getUtteranceForSystemResponse, [3, 0.6, userID], (err, result) => {
+    if (err) { return reject(err); }
+    if (result.length > 0) {
+      result = result[0];
+      const utterance = new Utterance(
+        result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
+      );
+      dialogue = constructDialogue(dialogue, utterance);
+      resolve(dialogue);
+    }
+    else {
+      resolve(null);  // no utterance available to judge.
+    }
+  });
+});
 
 exports.addJudgement = (uttrID, userID, score) => {
   db.query(queries.addJudgement, [uttrID, userID, score], (err) => {
     if (err) { throw err; }
-    console.debug('added judgement');
   });
 }
+
+exports.addSystemResponse = (templateID, uttrID, userID) => {
+  db.query(queries.addSystemResponse, [templateID, uttrID, userID], (err) => {
+    if (err) { throw err; }
+  });
+}
+
+exports.updateSystemResponsToUtterance = (uttrID) => {
+  db.query(queries.getSystemResponsesRanked, [uttrID, 2], (err, result) => {
+    if (err) { throw err; }
+    if (result.length > 0) {
+      db.query(queries.updateSystemResponse, [result[0].templateID, uttrID], (err) => {
+        if (err) { throw err; }
+      });
+    }
+  });
+}
+
+exports.getDialogueForUserResponse = (userID) => new Promise((resolve, reject) => {
+  var dialogue = new Dialogue();
+
+  db.query(queires.getUtteranceForUserResponse, [userID, 3, 3, 0.6], (err, result) => {
+    if (err) { return reject(err) }
+    if (result.length > 0) {
+      result = result[0];
+      const utterance = new Utterance(
+        result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse
+      );
+      dialogue = constructDialogue(dialogue, utterance);
+      resolve(dialogue);    }
+    else {
+      resolve(null);
+    }
+  });
+});
