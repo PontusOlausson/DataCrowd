@@ -70,7 +70,8 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
     const bar = new Promise((resolve) => {
       rows.forEach((item) => {
         const utterance = new Utterance(
-          item.uttrID, item.userID, item.responseTo, item.uttr, item.systemResponse, null, item.votes, item.score,
+          item.uttrID, item.userID, item.responseTo, item.uttr,
+          item.systemResponse, null, item.votes, item.score,
         );
         utterances[item.uttrID] = utterance;
       });
@@ -90,14 +91,14 @@ const constructDialogue = (dialogue, utterance) => new Promise((resolve, reject)
     db.query(queries.getUtterance, utterance.responseTo, (err, result) => {
       if (err) { reject(err); } else {
         result = result[0];
-        const new_utterance = new Utterance(
+        const newUtterance = new Utterance(
           result.uttrID, result.userID, result.responseTo,
           result.uttr, result.systemResponse, result.systemResponseText,
         );
 
         // rekursivt anrop som verkar jätteläskigt
-        constructDialogue(dialogue, new_utterance)
-          .then((finished_dialogue) => { resolve(finished_dialogue); })
+        constructDialogue(dialogue, newUtterance)
+          .then((finishedDialogue) => { resolve(finishedDialogue); })
           .catch((err) => { reject(err); });
       }
     });
@@ -105,9 +106,9 @@ const constructDialogue = (dialogue, utterance) => new Promise((resolve, reject)
     resolve(dialogue);
   }
 })
-  .then((new_dialogue) => {
-    new_dialogue.addUtterance(utterance);
-    resolve(new_dialogue);
+  .then((newDialogue) => {
+    newDialogue.addUtterance(utterance);
+    resolve(newDialogue);
   })
   .catch((err) => { reject(err); }));
 
@@ -123,7 +124,7 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
       );
 
       constructDialogue(dialogue, utterance)
-        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .then((finishedDialogue) => { resolve(finishedDialogue); })
         .catch((err) => { reject(err); });
     } else {
       resolve(null); // no utterance available to judge.
@@ -142,7 +143,7 @@ exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject)
         result.uttrID, result.userID, result.responseTo, result.uttr, result.systemResponse,
       );
       constructDialogue(dialogue, utterance)
-        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .then((finishedDialogue) => { resolve(finishedDialogue); })
         .catch((err) => { reject(err); });
     } else {
       resolve(null); // no utterance available to judge.
@@ -186,7 +187,7 @@ exports.getDialogueForUserResponse = (userID) => new Promise((resolve, reject) =
         result.uttr, result.systemResponse, result.systemResponseText,
       );
       constructDialogue(dialogue, utterance)
-        .then((finished_dialogue) => { resolve(finished_dialogue); })
+        .then((finishedDialogue) => { resolve(finishedDialogue); })
         .catch((err) => { reject(err); });
     } else {
       resolve(null);

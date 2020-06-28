@@ -75,8 +75,8 @@ const model = require('./model.js');
 model.init({ io });
 
 // Handle connected socket.io sockets
-io.on('connection', (socket) => {
-});
+// io.on('connection', (socket) => {
+// });
 
 // Start server
 httpServer.listen(port, () => {

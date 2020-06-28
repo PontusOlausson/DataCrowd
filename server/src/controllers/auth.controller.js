@@ -3,10 +3,7 @@
 'use strict';
 
 const express = require('express');
-const bcrypt = require('bcrypt');
 const model = require('../model.js');
-
-const saltRounds = 10;
 
 const router = express.Router();
 
@@ -42,7 +39,7 @@ const requireAdmin = (req, res, next) => {
       if (maybeUser === undefined) {
         res.status(401).send('Unauthorized. Please make sure you are logged in before attempting this action again.');
         return;
-      } if (maybeUser.admin != 1) {
+      } if (maybeUser.admin !== 1) {
         res.status(401).send('Unauthorized. Please make sure you are logged in as admin before attempting this action again.');
         return;
       }

@@ -12,7 +12,7 @@ router.post('/submitUtterance', (req, res) => {
   console.debug(utterance);
 
   // do some checks on the input
-  if (utterance == 'testUttr') {
+  if (utterance === 'testUttr') {
     res.status(422).send('You entered the magical test utterance input. Error.');
     return;
   }
