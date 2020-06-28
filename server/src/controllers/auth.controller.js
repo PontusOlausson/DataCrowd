@@ -42,7 +42,7 @@ const requireAdmin = (req, res, next) => {
       if (maybeUser === undefined) {
         res.status(401).send('Unauthorized. Please make sure you are logged in before attempting this action again.');
         return;
-      } else if (maybeUser.admin != 1) {
+      } if (maybeUser.admin != 1) {
         res.status(401).send('Unauthorized. Please make sure you are logged in as admin before attempting this action again.');
         return;
       }

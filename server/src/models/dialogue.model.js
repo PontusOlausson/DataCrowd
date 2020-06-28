@@ -18,10 +18,6 @@ class Dialogue {
     // TODO: check if the new utterance is a response to the previously last utterance.
     this.utterances.push(utterance);
   }
-
-  getLastUtterance() {
-    return utterances[utterances.length - 1];
-  }
 }
 
 module.exports = Dialogue;

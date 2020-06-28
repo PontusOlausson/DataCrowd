@@ -34,7 +34,7 @@ router.post('/registerUser', (req, res) => {
 router.get('/getUsers', (req, res) => {
   model.getUsers()
     .then((result) => {
-      res.status(200).json({ users: result, });
+      res.status(200).json({ users: result });
     })
     .catch((err) => {
       throw err;
@@ -48,7 +48,7 @@ router.get('/getUsers', (req, res) => {
 router.get('/getUserUtterances', (req, res) => {
   model.getUserUtterances()
     .then((result) => {
-      res.status(200).json({ userUtterances: result, });
+      res.status(200).json({ userUtterances: result });
     })
     .catch((err) => {
       throw err;

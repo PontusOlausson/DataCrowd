@@ -49,10 +49,10 @@ export default {
           score,
         }),
       })
-      .then(() => {
-        this.fetchDialogue();
-      })
-      .catch(console.error);
+        .then(() => {
+          this.fetchDialogue();
+        })
+        .catch(console.error);
     },
   },
   created() {

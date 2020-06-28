@@ -2,6 +2,7 @@
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
     <h1>What is your userID?</h1>
+    <h2>{{ this.status }}</h2>
     <form>
       <input class="form-control" type="text" v-model="userID" required autofocus />
       <input class="btn btn-default" type="button"
@@ -16,6 +17,7 @@ export default {
   components: {},
   data: () => ({
     userID: '',
+    status: '',
   }),
   methods: {
     login() {
@@ -34,7 +36,7 @@ export default {
           this.$router.push({
             path: 'login',
           });
-          throw new Error(resp.text);
+          throw resp;
         })
         .then(() => {
           this.$store.commit('setIsAuthenticated', true);
@@ -44,7 +46,9 @@ export default {
         })
         .catch((error) => {
           console.error('Authentication failed unexpectedly');
-          throw error;
+          error.text().then((text) => {
+            this.status = text;
+          });
         });
     },
     register() {

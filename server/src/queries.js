@@ -1,48 +1,50 @@
+/* eslint no-multi-str: off */
+
 exports.addUser = 'INSERT INTO users (userID, admin) VALUES (?, ?)';
 exports.findUser = 'SELECT * FROM users WHERE userID = ? LIMIT 1';
 exports.getUsers = 'SELECT * FROM users';
 exports.getTemplates = 'SELECT * FROM templates';
 exports.addUserUtterance = 'INSERT INTO userUtterances \
- (uttr, userID, responseTo) VALUES (?, ?, ?)';
+  (uttr, userID, responseTo) VALUES (?, ?, ?)';
 exports.getUserUtterances = 'SELECT userUtterances.*, \
- COUNT(judgements.uttrID) as votes, \
- AVG(judgements.score) as score \
- FROM userUtterances \
- LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
- GROUP BY userUtterances.uttrID \
- ORDER BY userUtterances.uttrID';
+  COUNT(judgements.uttrID) as votes, \
+  AVG(judgements.score) as score \
+  FROM userUtterances \
+  LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
+  GROUP BY userUtterances.uttrID \
+  ORDER BY userUtterances.uttrID';
 exports.getUtteranceForJudgement = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
-  	FROM userUtterances LEFT OUTER JOIN judgements \
-  	ON userUtterances.uttrID = judgements.uttrID \
+    SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
+    FROM userUtterances LEFT OUTER JOIN judgements \
+    ON userUtterances.uttrID = judgements.uttrID \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
-  	GROUP BY userUtterances.uttrID \
+    GROUP BY userUtterances.uttrID \
     HAVING votes < ? \
   ) AS u \
   LEFT OUTER JOIN \
   ( \
-  	SELECT uttrID FROM judgements WHERE userID = ? \
+    SELECT uttrID FROM judgements WHERE userID = ? \
   ) AS j \
   ON u.uttrID = j.uttrID \
   WHERE j.uttrID IS NULL';
 exports.getUtteranceForSystemResponse = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
-  	FROM userUtterances LEFT OUTER JOIN judgements \
-  	ON userUtterances.uttrID = judgements.uttrID \
+    SELECT userUtterances.*, COUNT(judgements.uttrID) AS votes, AVG(judgements.score) AS score, template AS systemResponseText \
+    FROM userUtterances LEFT OUTER JOIN judgements \
+    ON userUtterances.uttrID = judgements.uttrID \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
-  	WHERE userUtterances.systemResponse IS NULL \
-  	GROUP BY userUtterances.uttrID \
-  	HAVING votes >= ? AND score >= ? \
+    WHERE userUtterances.systemResponse IS NULL \
+    GROUP BY userUtterances.uttrID \
+HAVING votes >= ? AND score >= ? \
   ) AS u \
   LEFT OUTER JOIN \
   ( \
-  	SELECT uttrID FROM systemResponses WHERE userID = ? \
+    SELECT uttrID FROM systemResponses WHERE userID = ? \
   ) AS s \
   ON u.uttrID = s.uttrID \
   WHERE s.uttrID IS NULL \
@@ -64,37 +66,37 @@ exports.updateSystemResponse = 'UPDATE userUtterances SET systemResponse = ? WHE
 exports.getUtteranceForUserResponse = 'SELECT u.* \
   FROM \
   ( \
-  	SELECT userUtterances.*, template AS systemResponseText \
+    SELECT userUtterances.*, template AS systemResponseText \
     FROM userUtterances \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
-  	WHERE systemResponse IS NOT NULL \
+    WHERE systemResponse IS NOT NULL \
   ) AS u \
   LEFT OUTER JOIN \
   ( \
-  	SELECT responseTo FROM userUtterances WHERE userID = ? \
+    SELECT responseTo FROM userUtterances WHERE userID = ? \
   ) AS r1 \
   ON u.uttrID = r1.responseTo \
   LEFT OUTER JOIN \
   ( \
-  	SELECT userUtterances.responseTo, \
-  	COUNT(judgements.uttrID) as votes, \
-  	AVG(judgements.score) as score \
-  	FROM userUtterances \
-  	LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
-  	GROUP BY userUtterances.uttrID \
-  	HAVING votes < ? \
+    SELECT userUtterances.responseTo, \
+    COUNT(judgements.uttrID) as votes, \
+    AVG(judgements.score) as score \
+    FROM userUtterances \
+    LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
+    GROUP BY userUtterances.uttrID \
+    HAVING votes < ? \
   ) as r2 \
   ON u.uttrID = r2.responseTo \
   LEFT OUTER JOIN \
   ( \
-  	SELECT userUtterances.responseTo, \
-  	COUNT(judgements.uttrID) as votes, \
-  	AVG(judgements.score) as score \
-  	FROM userUtterances \
-  	LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
-  	GROUP BY userUtterances.uttrID \
-  	HAVING votes >= ? AND score > ? \
+    SELECT userUtterances.responseTo, \
+    COUNT(judgements.uttrID) as votes, \
+    AVG(judgements.score) as score \
+    FROM userUtterances \
+    LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
+    GROUP BY userUtterances.uttrID \
+    HAVING votes >= ? AND score > ? \
   ) AS r3 \
   ON u.uttrID = r3.responseTo \
   WHERE r1.responseTo IS NULL AND r2.responseTo IS NULL AND r3.responseTo IS NULL';

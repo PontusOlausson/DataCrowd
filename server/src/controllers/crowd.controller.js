@@ -8,7 +8,7 @@ const model = require('../model.js');
 const router = express.Router();
 
 router.post('/submitUtterance', (req, res) => {
-  var utterance = req.body.utterance;
+  const { utterance } = req.body;
   console.debug(utterance);
 
   // do some checks on the input
@@ -16,6 +16,13 @@ router.post('/submitUtterance', (req, res) => {
     res.status(422).send('You entered the magical test utterance input. Error.');
     return;
   }
+
+  // TODO:
+  // Control the input:
+  //    contains right entities
+  //    unique (use hamming distance)
+  // Control that the response is expected (someone else could already have responded)
+  //    in that case, probably send a status code to communicate this
 
   model.addUserUtterance(utterance, req.session.userID, req.body.responseTo);
 
@@ -31,7 +38,7 @@ router.post('/passJudgement', (req, res) => {
 router.get('/getDialogueForJudgement', (req, res) => {
   model.getDialogueForJudgement(req.session.userID)
     .then((dialogue) => {
-      res.status(200).json({ dialogue: dialogue, });
+      res.status(200).json({ dialogue });
     })
     .catch((err) => {
       throw err;
@@ -41,7 +48,7 @@ router.get('/getDialogueForJudgement', (req, res) => {
 router.get('/getDialogueForSystemResponse', (req, res) => {
   model.getDialogueForSystemResponse(req.session.userID)
     .then((dialogue) => {
-      res.status(200).json({ dialogue: dialogue, });
+      res.status(200).json({ dialogue });
     })
     .catch((err) => {
       throw err;
@@ -51,7 +58,7 @@ router.get('/getDialogueForSystemResponse', (req, res) => {
 router.get('/getTemplates', (req, res) => {
   model.getTemplates()
     .then((templates) => {
-      res.status(200).json({ templates: templates, });
+      res.status(200).json({ templates });
     })
     .catch((err) => {
       throw err;
@@ -67,7 +74,7 @@ router.post('/addSystemResponse', (req, res) => {
 router.get('/getDialogueForUserResponse', (req, res) => {
   model.getDialogueForUserResponse(req.session.userID)
     .then((dialogue) => {
-      res.status(200).json({ dialogue: dialogue, });
+      res.status(200).json({ dialogue });
     })
     .catch((err) => {
       throw err;
