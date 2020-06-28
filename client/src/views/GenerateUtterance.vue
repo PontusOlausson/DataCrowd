@@ -1,26 +1,28 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
-    <h1>Generate an utterance!</h1>
-    <h2>{{ this.status }}</h2>
+    <h1>Generera ett yttrande!</h1>
+    <div v-if="status" :class="status">{{ statusText }}</div>
     <div v-if="dialogue">
-      <h2>Fetched dialogue to generate an answer to!</h2>
-      <div class="well" v-for="utterance in dialogue.utterances" :key="utterance.id">
-        <h4>
-          <span>
-            User utterance: {{ utterance.uttr }} <br>
-            System response: {{ utterance.systemResponseText }}
-          </span>
-        </h4>
+      <h2>Skriv ett svar till följande dialog:</h2>
+      <div class="well">
+        <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
+          <h4 class="userUtterance">
+            Användare: {{ utterance.uttr }}
+          </h4>
+          <h4 class="systemUtterance">
+            Busschaufför: {{ utterance.systemResponseText }}
+          </h4>
+      </div>
       </div>
     </div>
     <div v-else>
-      <h2>Start a new dialogue!</h2>
+      <h2>Starta en ny dialog!</h2>
     </div>
     <form id="genUttrForm">
       <input class="form-control" type="text" v-model="utterance" required autofocus />
       <input class="btn btn-default" type="button"
-       v-on:click="submitUtterance()" value="Submit" />
+       v-on:click="submitUtterance()" value="Skicka in" />
     </form>
   </div>
 </template>
@@ -33,10 +35,13 @@ export default {
     dialogue: null,
     utterance: '',
     responseTo: null,
-    status: '',
+    statusText: '',
+    status: null,
   }),
   methods: {
     submitUtterance() {
+      document.getElementById('genUttrForm').reset();
+
       fetch('/api/submitUtterance', {
         method: 'POST',
         headers: {
@@ -48,12 +53,13 @@ export default {
         }),
       })
         .then((resp) => {
-          if (resp.ok) return resp;
+          this.status = `status-error-${!resp.ok}`;
           resp.text().then((text) => {
-            this.status = text;
-            return text;
+            this.statusText = text;
           });
-          return resp;
+
+          if (resp.ok) return resp;
+          throw resp;
         })
         .then(() => {
           this.fetchDialogue();
@@ -61,8 +67,6 @@ export default {
         .catch((error) => {
           throw error;
         });
-
-      document.getElementById('genUttrForm').reset();
     },
 
     fetchDialogue() {

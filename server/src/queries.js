@@ -11,8 +11,7 @@ exports.getUserUtterances = 'SELECT userUtterances.*, \
   AVG(judgements.score) as score \
   FROM userUtterances \
   LEFT OUTER JOIN judgements ON userUtterances.uttrID = judgements.uttrID \
-  GROUP BY userUtterances.uttrID \
-  ORDER BY userUtterances.uttrID';
+  GROUP BY userUtterances.uttrID';
 exports.getUtteranceForJudgement = 'SELECT u.* \
   FROM \
   ( \
@@ -55,6 +54,7 @@ exports.getUtterance = 'SELECT userUtterances.*, template AS systemResponseText 
   LEFT OUTER JOIN templates \
   ON userUtterances.systemResponse = templates.templateID \
   WHERE userUtterances.uttrID = ?';
+exports.getFinishedUtterances = 'SELECT * FROM userUtterances WHERE systemResponse = 1';
 exports.addSystemResponse = 'INSERT INTO systemResponses (templateID, uttrID, userID) VALUES (?, ?, ?)';
 exports.getSystemResponsesRanked = 'SELECT templateID, COUNT(templateID) AS votes \
   FROM systemResponses \
@@ -71,6 +71,7 @@ exports.getUtteranceForUserResponse = 'SELECT u.* \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
     WHERE systemResponse IS NOT NULL \
+    AND systemResponse != 1 AND systemResponse != 2 \
   ) AS u \
   LEFT OUTER JOIN \
   ( \

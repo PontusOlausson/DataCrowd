@@ -33,9 +33,6 @@ export default {
         .then((resp) => {
           if (resp.ok) return resp;
           this.$store.commit('setIsAuthenticated', false);
-          this.$router.push({
-            path: 'login',
-          });
           throw resp;
         })
         .then(() => {

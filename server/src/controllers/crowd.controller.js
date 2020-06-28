@@ -13,7 +13,7 @@ router.post('/submitUtterance', (req, res) => {
 
   // do some checks on the input
   if (utterance === 'testUttr') {
-    res.status(422).send('You entered the magical test utterance input. Error.');
+    res.status(422).send('testUttr är en testkod för fel.');
     return;
   }
 

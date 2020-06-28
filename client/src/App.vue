@@ -120,4 +120,22 @@ button:focus {
 div.light-blue-background {
   background-color: #c5e7ff;
 }
+
+.dialogueTurn {
+}
+
+.userUtterance {
+}
+
+.systemUtterance {
+  color: green;
+}
+
+.status-error-true {
+  color: red;
+}
+
+.status-error-false {
+  color: green;
+}
 </style>

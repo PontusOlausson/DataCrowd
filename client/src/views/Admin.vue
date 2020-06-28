@@ -2,23 +2,16 @@
   <div class="container">
     <section class="col-md-10 col-md-offset-1">
       <div class="row" style="text-align: center;">
-        <h1>Welcome to the admin page!</h1>
+        <h1>Här syns alla färdiga dialoger!</h1>
       </div>
-
-      <div class="row">
-        <div class="well" v-for="utterance in userUtterances" :key="utterance.id">
-          <div class="row" style="text-align: center;">
-            <h4>
-              <span>
-                Uttr: {{ utterance.uttr }} <br>
-                votes: {{ utterance.votes }},
-                score: {{ utterance.score }}
-                <div v-if="utterance.systemResponse">
-                  system response: {{ utterance.systemResponse }}
-                </div>
-              </span>
-            </h4>
-          </div>
+      <div class="well" v-for="dialogue in dialogues" :key="dialogue.utterances[0].uttrID">
+        <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
+          <h4 class="userUtterance">
+            Användare: {{ utterance.uttr }}
+          </h4>
+          <h4 class="systemUtterance" v-if="utterance.systemResponseText">
+            Busschaufför: {{ utterance.systemResponseText }}
+          </h4>
         </div>
       </div>
     </section>
@@ -31,7 +24,7 @@ export default {
   components: {},
   data() {
     return {
-      userUtterances: {},
+      dialogues: {},
     };
   },
   methods: {
@@ -55,10 +48,10 @@ export default {
       })
       .catch(console.error);
 
-    fetch('/api/getUserUtterances')
+    fetch('/api/getFinishedDialogues')
       .then(res => res.json())
       .then((data) => {
-        this.userUtterances = data.userUtterances;
+        this.dialogues = data.dialogues;
       })
       .catch(console.error);
   },

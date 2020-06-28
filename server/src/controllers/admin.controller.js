@@ -41,14 +41,10 @@ router.get('/getUsers', (req, res) => {
     });
 });
 
-/**
- * Fetch the list of user utterances.
- * @returns {void}
- */
-router.get('/getUserUtterances', (req, res) => {
-  model.getUserUtterances()
-    .then((result) => {
-      res.status(200).json({ userUtterances: result });
+router.get('/getFinishedDialogues', (req, res) => {
+  model.getFinishedDialogues()
+    .then((dialogues) => {
+      res.status(200).json({ dialogues });
     })
     .catch((err) => {
       throw err;

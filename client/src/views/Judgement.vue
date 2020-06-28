@@ -2,13 +2,15 @@
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
     <h1>Fetched utterance to judge!</h1>
-    <div class="well" v-for="utterance in dialogue.utterances" v-bind:key="utterance.uttrID">
-      <h3>
-        User utterance: {{ utterance.uttr }}
-      </h3>
-      <h4 v-if="utterance.systemResponseText">
-        System response: {{ utterance.systemResponseText }}
-      </h4>
+    <div class="well">
+      <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
+        <h3 class="userUtterance">
+          Användare: {{ utterance.uttr }}
+        </h3>
+        <h4 v-if="utterance.systemResponseText" class="systemUtterance">
+          Busschaufför: {{ utterance.systemResponseText }}
+        </h4>
+      </div>
     </div>
     <input class="btn btn-default" type="button"
       v-on:click="passJudgement(1)" value="Good" />
