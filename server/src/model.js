@@ -98,8 +98,6 @@ const constructDialogue = (dialogue, uttrID) =>
 
 
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
-  const dialogue = new Dialogue();
-
   db.query(queries.getUtteranceForJudgement, [userID, votesCutOff, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
@@ -112,8 +110,6 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
 });
 
 exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject) => {
-  const dialogue = new Dialogue();
-
   db.query(queries.getUtteranceForSystemResponse, [3, 0.6, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
@@ -137,7 +133,7 @@ exports.addSystemResponse = (templateID, uttrID, userID) => {
   });
 };
 
-exports.updateSystemResponsToUtterance = (uttrID) => {
+exports.updateSystemResponseToUtterance = (uttrID) => {
   db.query(queries.getSystemResponsesRanked, [uttrID, 2], (err, result) => {
     if (err) { throw err; }
     if (result.length > 0) {
@@ -170,9 +166,7 @@ exports.getFinishedDialogues = () => new Promise((resolve, reject) => {
     if (err) { return reject(err); }
 
     for (var i = 0; i < result.length; i++) {
-      promises.push(
-        constructDialogue(new Dialogue(), result[i].uttrID)
-      );
+      promises.push(constructDialogue(new Dialogue(), result[i].uttrID));
     }
 
     Promise.all(promises)

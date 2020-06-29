@@ -67,7 +67,7 @@ router.get('/getTemplates', (req, res) => {
 
 router.post('/addSystemResponse', (req, res) => {
   model.addSystemResponse(req.body.templateID, req.body.uttrID, req.session.userID);
-  model.updateSystemResponsToUtterance(req.body.uttrID);
+  model.updateSystemResponseToUtterance(req.body.uttrID);
   res.sendStatus(201);
 });
 
