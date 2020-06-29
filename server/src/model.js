@@ -65,28 +65,6 @@ exports.addUserUtterance = (uttr, userID, responseTo) => new Promise((resolve, r
   });
 });
 
-exports.getUserUtterances = () => new Promise((resolve, reject) => {
-  const utterances = {};
-  db.query(queries.getUserUtterances, (err, rows) => {
-    if (err) { reject(err); }
-
-    const bar = new Promise((resolve) => {
-      rows.forEach((item) => {
-        const utterance = new Utterance(
-          item.uttrID, item.userID, item.responseTo, item.uttr,
-          item.systemResponse, item.systemResponseText, item.votes, item.score,
-        );
-        utterances[item.uttrID] = utterance;
-      });
-      resolve();
-    });
-
-    return bar.then(() => {
-      resolve(utterances);
-    });
-  });
-});
-
 const getUtterance = (uttrID) => new Promise((resolve, reject) => {
   db.query(queries.getUtterance, uttrID, (err, result) => {
     if (err) { return reject(err); } else {
