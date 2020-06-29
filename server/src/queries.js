@@ -20,6 +20,7 @@ exports.getUtteranceForJudgement = 'SELECT u.* \
     ON userUtterances.uttrID = judgements.uttrID \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
+    WHERE userUtterances.userID != ? AND userUtterances.systemResponse IS NULL \
     GROUP BY userUtterances.uttrID \
     HAVING votes < ? \
   ) AS u \

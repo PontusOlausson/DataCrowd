@@ -100,7 +100,7 @@ const constructDialogue = (dialogue, uttrID) =>
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   const dialogue = new Dialogue();
 
-  db.query(queries.getUtteranceForJudgement, [3, userID], (err, result) => {
+  db.query(queries.getUtteranceForJudgement, [userID, votesCutOff, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
       constructDialogue(new Dialogue(), result[0].uttrID)
