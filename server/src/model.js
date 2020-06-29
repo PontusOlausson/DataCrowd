@@ -87,33 +87,37 @@ exports.getUserUtterances = () => new Promise((resolve, reject) => {
   });
 });
 
-// riktig mörk magi händer här
-// be till gudarna att det aldrig krånglar
-const constructDialogue = (dialogue, utterance) => new Promise((resolve, reject) => new Promise((resolve, reject) => {
-  if (utterance.responseTo != null) {
-    db.query(queries.getUtterance, utterance.responseTo, (err, result) => {
-      if (err) { reject(err); } else {
-        const uttr = result[0];
-        const newUtterance = new Utterance(
-          uttr.uttrID, uttr.userID, uttr.responseTo,
-          uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-        );
+const getUtterance = (uttrID) => new Promise((resolve, reject) => {
+  db.query(queries.getUtterance, uttrID, (err, result) => {
+    if (err) { return reject(err); } else {
+      const uttr = result[0];
+      const utterance = new Utterance(
+        uttr.uttrID, uttr.userID, uttr.responseTo,
+        uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
+      );
+      resolve(utterance);
+    }
+  });
+});
 
-        // rekursivt anrop som verkar jätteläskigt
-        constructDialogue(dialogue, newUtterance)
-          .then((finishedDialogue) => { resolve(finishedDialogue); })
-          .catch((err) => { reject(err); });
+const constructDialogue = (dialogue, uttrID) =>
+  getUtterance(uttrID)
+    .then((utterance) => {
+      if(utterance.responseTo) {
+        return constructDialogue(dialogue, utterance.responseTo)
+          .then((nextDialogue) => {
+            nextDialogue.addUtterance(utterance);
+            return nextDialogue;
+          });
+      } else {
+        dialogue.addUtterance(utterance);
+        return dialogue;
       }
+    })
+    .catch((err) => {
+      throw err;
     });
-  } else {
-    resolve(dialogue);
-  }
-})
-  .then((newDialogue) => {
-    newDialogue.addUtterance(utterance);
-    resolve(newDialogue);
-  })
-  .catch((err) => { reject(err); }));
+
 
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   const dialogue = new Dialogue();
@@ -121,15 +125,8 @@ exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   db.query(queries.getUtteranceForJudgement, [3, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
-      const uttr = result[0];
-      const utterance = new Utterance(
-        uttr.uttrID, uttr.userID, uttr.responseTo,
-        uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-      );
-
-      constructDialogue(dialogue, utterance)
-        .then((finishedDialogue) => { resolve(finishedDialogue); })
-        .catch((err) => { reject(err); });
+      constructDialogue(new Dialogue(), result[0].uttrID)
+        .then((dialogue) => resolve(dialogue));
     } else {
       resolve(null); // no utterance available to judge.
     }
@@ -142,14 +139,8 @@ exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject)
   db.query(queries.getUtteranceForSystemResponse, [3, 0.6, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
-      const uttr = result[0];
-      const utterance = new Utterance(
-        uttr.uttrID, uttr.userID, uttr.responseTo,
-        uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-      );
-      constructDialogue(dialogue, utterance)
-        .then((finishedDialogue) => { resolve(finishedDialogue); })
-        .catch((err) => { reject(err); });
+      constructDialogue(new Dialogue(), result[0].uttrID)
+        .then((dialogue) => resolve(dialogue));
     } else {
       resolve(null); // no utterance available to judge.
     }
@@ -181,20 +172,13 @@ exports.updateSystemResponsToUtterance = (uttrID) => {
 
 exports.getDialogueForUserResponse = (userID) => new Promise((resolve, reject) => {
   // TODO: in the future, the utterance being responded to should be reserved.
-  const dialogue = new Dialogue();
 
   db.query(queries.getUtteranceForUserResponse,
     [userID, votesCutOff, votesCutOff, successRatio], (err, result) => {
       if (err) { return reject(err); }
       if (result.length > 0) {
-        const uttr = result[0];
-        const utterance = new Utterance(
-          uttr.uttrID, uttr.userID, uttr.responseTo,
-          uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-        );
-        constructDialogue(dialogue, utterance)
-          .then((finishedDialogue) => { resolve(finishedDialogue); })
-          .catch((err) => { reject(err); });
+        constructDialogue(new Dialogue(), result[0].uttrID)
+          .then((dialogue) => resolve(dialogue));
       } else {
         resolve(null);
       }
@@ -208,13 +192,8 @@ exports.getFinishedDialogues = () => new Promise((resolve, reject) => {
     if (err) { return reject(err); }
 
     for (var i = 0; i < result.length; i++) {
-      const uttr = result[i];
-      const utterance = new Utterance(
-        uttr.uttrID, uttr.userID, uttr.responseTo,
-        uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-      );
       promises.push(
-        constructDialogue(new Dialogue(), utterance)
+        constructDialogue(new Dialogue(), result[i].uttrID)
       );
     }
 
