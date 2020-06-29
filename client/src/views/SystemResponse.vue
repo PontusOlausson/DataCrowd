@@ -4,9 +4,9 @@
     <h1>Fetched utterance waiting for response!</h1>
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
-        <h3 class="userUtterance">
+        <h4 class="userUtterance">
           Användare: {{ utterance.uttr }}
-        </h3>
+        </h4>
         <h4 v-if="utterance.systemResponseText" class="systemUtterance">
           Busschaufför: {{ utterance.systemResponseText }}
         </h4>
