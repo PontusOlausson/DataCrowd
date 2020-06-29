@@ -77,6 +77,8 @@ export default {
           if (data.dialogue != null) {
             const { utterances } = data.dialogue;
             this.responseTo = utterances[utterances.length - 1].uttrID;
+          } else {
+            this.responseTo = null;
           }
         })
         .catch(console.error);
