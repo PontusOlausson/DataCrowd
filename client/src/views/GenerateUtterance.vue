@@ -40,8 +40,6 @@ export default {
   }),
   methods: {
     submitUtterance() {
-      document.getElementById('genUttrForm').reset();
-
       fetch('/api/submitUtterance', {
         method: 'POST',
         headers: {
@@ -55,7 +53,10 @@ export default {
         .then((resp) => {
           this.status = `status-error-${!resp.ok}`;
           resp.text().then((text) => {
-            this.statusText = text;
+            this.statusText = `${text} \n ${this.utterance}`;
+
+            document.getElementById('genUttrForm').reset();
+            this.utterance = '';
           });
 
           if (resp.ok) return resp;
