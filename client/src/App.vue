@@ -125,9 +125,11 @@ div.light-blue-background {
 }
 
 .userUtterance {
+  text-align: left;
 }
 
 .systemUtterance {
+  text-align: left;
   color: green;
 }
 

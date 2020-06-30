@@ -13,11 +13,19 @@
           <h4 class="systemUtterance">
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
-      </div>
+        </div>
+        <h4 class="userUtterance">
+          Användare: {{ this.utterance }}
+        </h4>
       </div>
     </div>
     <div v-else>
       <h2>Starta en ny dialog!</h2>
+      <div class="well">
+        <h4 class="userUtterance">
+          Användare: {{ this.utterance }}
+        </h4>
+      </div>
     </div>
     <form id="genUttrForm">
       <input class="form-control" type="text" v-model="utterance" required autofocus />
