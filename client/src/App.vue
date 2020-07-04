@@ -125,10 +125,12 @@ div.light-blue-background {
 }
 
 .userUtterance {
+  text-align: left;
 }
 
 .systemUtterance {
   color: green;
+  text-align: left; 
 }
 
 .status-error-true {
@@ -137,5 +139,20 @@ div.light-blue-background {
 
 .status-error-false {
   color: green;
+}
+
+.flexBoxLogin {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.flexBoxLogin > * {
+  margin: 0 0 0 15px;
+}
+
+.loginForm {
+  display: flex;
+  margin: 0 0 0 25 px;
 }
 </style>

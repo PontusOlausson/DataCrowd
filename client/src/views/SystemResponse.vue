@@ -1,7 +1,8 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
-    <h1>Fetched utterance waiting for response!</h1>
+    <h1>Fortsätt på denna dialog!</h1>
+    <h4>Du har nu rollen som busschafför. Svara användaren genom att välja det av svaren som passar bäst, givet följande dialog.</h4>
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
         <h4 class="userUtterance">
@@ -13,10 +14,33 @@
       </div>
     </div>
     <div>
-      <h2>Which of the following responses is the best fit?</h2>
+      <div class="flexBoxLogin">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
+          ?
+        </button>
+        <h3>Vilket av följande alternativ passar bäst?</h3>
+      </div>
       <div class="well" v-for="template in templates" v-bind:key="template.templateID"
        @click="pickSystemResponse(template.templateID)">
-        <h3>{{ template.template }}</h3>
+        <h2>{{ template.template }}</h2>
+      </div>
+    </div>
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="infoModalLabel">Guide</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
