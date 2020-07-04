@@ -3,6 +3,7 @@
     <section class="col-md-10 col-md-offset-1">
       <div class="row" style="text-align: center;">
         <h1>Här syns alla färdiga dialoger!</h1>
+        <h2>Antal färdiga dialoger: {{ dialogues.length }}</h2>
       </div>
       <div class="well" v-for="dialogue in dialogues" :key="dialogue.utterances[0].uttrID">
         <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
