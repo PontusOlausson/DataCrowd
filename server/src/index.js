@@ -11,21 +11,35 @@ betterLogging.default(console, {
     log: Color.Light_Green,
   }),
 });
+const fs = require('fs');
 const path = require('path'); // helper library for resolving relative paths
 const expressSession = require('express-session');
 const socketIOSession = require('express-socket.io-session');
 const express = require('express');
-const http = require('http');
+
+//const http = require('http');
+const https = require('https');
+
+const keyPath = '/etc/letsencrypt/live/dialogdata.se/privkey.pem';
+const certPath = '/etc/letsencrypt/live/dialogdata.se/fullchain.pem';
+
+const privateKey = fs.readFileSync(keyPath, 'utf8');
+const certificate = fs.readFileSync(certPath, 'utf8');
+
+const credentials = { key: privateKey, cert: certificate };
+
 // #endregion
 
 // #region setup boilerplate
 console.loglevel = 4; // Enables debug output
 const publicPath = path.join(__dirname, '..', '..', 'client', 'dist');
-const port = 80; // The port that the server will listen to, 80=compute engine
+const port = 443; // The port that the server will listen to, 80=compute engine
 const app = express(); // Creates express app
 
 // Express usually does this for us, but socket.io needs the httpServer directly
-const httpServer = http.Server(app);
+// const httpServer = http.createServer(app);
+
+const httpsServer = https.createServer(credentials, app);
 const io = require('socket.io').listen(httpServer); // Creates socket.io app
 
 // Setup middlewares
@@ -79,6 +93,6 @@ model.init({ io });
 // });
 
 // Start server
-httpServer.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
+httpsServer.listen(port, () => {
+  console.log(`Listening on https://localhost:${port}`);
 });
