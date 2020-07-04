@@ -5,6 +5,7 @@ import AdminView from '../views/Admin.vue';
 import GenUttrView from '../views/GenerateUtterance.vue';
 import JudgementView from '../views/Judgement.vue';
 import SystemResponseView from '../views/SystemResponse.vue';
+import AboutView from '../views/About.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -16,6 +17,7 @@ const routes = [
   { path: '/genUttr', component: GenUttrView },
   { path: '/judge', component: JudgementView },
   { path: '/sysres', component: SystemResponseView },
+  { path: '/about', component: AboutView },
 ];
 
 const router = new VueRouter({

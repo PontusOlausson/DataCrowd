@@ -37,6 +37,9 @@
             <li v-on:click="redirect('/sysres')">
               <a style="cursor: pointer;">Choose system response</a>
             </li>
+            <li v-on:click="redirect('/about')">
+              <a style="cursor: pointer;">Om detta arbete</a>
+            </li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->

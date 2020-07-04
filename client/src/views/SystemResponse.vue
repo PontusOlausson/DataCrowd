@@ -7,6 +7,7 @@
         <h4>
           Du har nu rollen som busschafför.
           Svara användaren genom att välja det av svaren som passar bäst, givet följande dialog.
+          
         </h4>
         <div class="well">
           <div class="dialogueTurn" v-for="utterance in dialogue.utterances"
