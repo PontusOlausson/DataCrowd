@@ -14,7 +14,6 @@
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
         </div>
-        <h4 class="userUtterance" v-if="this.utterance">
           Användare: {{ this.utterance }}
         </h4>
       </div>

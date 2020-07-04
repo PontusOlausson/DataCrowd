@@ -35,9 +35,9 @@ exports.addUser = (userID, admin) => {
 };
 
 /**
-* Returns the user object with the given id.
+* Returns the user with the given id.
 * @param {String} userID - The id of the user.
-* @returns {User}
+* @returns {Promise}
 */
 exports.findUser = (userID) => new Promise((resolve, reject) => {
   if (userID === undefined) { return resolve(undefined); }
@@ -50,6 +50,10 @@ exports.findUser = (userID) => new Promise((resolve, reject) => {
   });
 });
 
+/**
+* Returns all users in the database.
+* @returns {User}
+*/
 exports.getUsers = () => new Promise((resolve, reject) => {
   db.query(queries.getUsers, (err, result) => {
     if (err) { reject(err); } else { resolve(result); }

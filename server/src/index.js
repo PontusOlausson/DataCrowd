@@ -17,7 +17,7 @@ const expressSession = require('express-session');
 const socketIOSession = require('express-socket.io-session');
 const express = require('express');
 
-//const http = require('http');
+const http = require('http');
 const https = require('https');
 
 const keyPath = '/etc/letsencrypt/live/dialogdata.se/privkey.pem';
@@ -37,10 +37,9 @@ const port = 443; // The port that the server will listen to, 80=compute engine
 const app = express(); // Creates express app
 
 // Express usually does this for us, but socket.io needs the httpServer directly
-// const httpServer = http.createServer(app);
-
+const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
-const io = require('socket.io').listen(httpsServer); // Creates socket.io app
+const io = require('socket.io').listen(httpsServer).listen(httpServer); // Creates socket.io app
 
 // Setup middlewares
 app.use(betterLogging.expressMiddleware(console, {
@@ -95,4 +94,8 @@ model.init({ io });
 // Start server
 httpsServer.listen(port, () => {
   console.log(`Listening on https://localhost:${port}`);
+});
+
+httpServer.listen(80, () => {
+  console.log(`Listening on http://localhost:${80}`);
 });
