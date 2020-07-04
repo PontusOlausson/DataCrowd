@@ -40,9 +40,13 @@ exports.addUser = (userID, admin) => {
 * @returns {User}
 */
 exports.findUser = (userID) => new Promise((resolve, reject) => {
-  if (userID == null) { return resolve(undefined); }
+  if (userID === undefined) { return resolve(undefined); }
   db.query(queries.findUser, userID, (err, result) => {
-    if (err) { reject(err); } else { resolve(result[0]); }
+    if (err) { return reject(err); }
+    if (result) {
+      return resolve(result[0]);
+    }
+    return resolve(undefined); // no user found
   });
 });
 
@@ -67,45 +71,40 @@ exports.addUserUtterance = (uttr, userID, responseTo) => new Promise((resolve, r
 
 const getUtterance = (uttrID) => new Promise((resolve, reject) => {
   db.query(queries.getUtterance, uttrID, (err, result) => {
-    if (err) { return reject(err); } else {
-      const uttr = result[0];
-      const utterance = new Utterance(
-        uttr.uttrID, uttr.userID, uttr.responseTo,
-        uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
-      );
-      resolve(utterance);
-    }
+    if (err) { return reject(err); }
+
+    const uttr = result[0];
+    const utterance = new Utterance(
+      uttr.uttrID, uttr.userID, uttr.responseTo,
+      uttr.uttr, uttr.systemResponse, uttr.systemResponseText,
+    );
+    return resolve(utterance);
   });
 });
 
-const constructDialogue = (dialogue, uttrID) =>
-  getUtterance(uttrID)
-    .then((utterance) => {
-      if(utterance.responseTo) {
-        return constructDialogue(dialogue, utterance.responseTo)
-          .then((nextDialogue) => {
-            nextDialogue.addUtterance(utterance);
-            return nextDialogue;
-          });
-      } else {
-        dialogue.addUtterance(utterance);
-        return dialogue;
-      }
-    })
-    .catch((err) => {
-      throw err;
-    });
+const constructDialogue = (dialogue, uttrID) => getUtterance(uttrID).then((utterance) => {
+  if (utterance.responseTo) {
+    return constructDialogue(dialogue, utterance.responseTo)
+      .then((nextDialogue) => {
+        nextDialogue.addUtterance(utterance);
+        return nextDialogue;
+      });
+  }
+  dialogue.addUtterance(utterance);
+  return dialogue;
+}).catch((err) => {
+  throw err;
+});
 
 
 exports.getDialogueForJudgement = (userID) => new Promise((resolve, reject) => {
   db.query(queries.getUtteranceForJudgement, [userID, votesCutOff, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
-      constructDialogue(new Dialogue(), result[0].uttrID)
+      return constructDialogue(new Dialogue(), result[0].uttrID)
         .then((dialogue) => resolve(dialogue));
-    } else {
-      resolve(null); // no utterance available to judge.
     }
+    return resolve(null); // no utterance available to judge.
   });
 });
 
@@ -113,11 +112,10 @@ exports.getDialogueForSystemResponse = (userID) => new Promise((resolve, reject)
   db.query(queries.getUtteranceForSystemResponse, [3, 0.6, userID], (err, result) => {
     if (err) { return reject(err); }
     if (result.length > 0) {
-      constructDialogue(new Dialogue(), result[0].uttrID)
+      return constructDialogue(new Dialogue(), result[0].uttrID)
         .then((dialogue) => resolve(dialogue));
-    } else {
-      resolve(null); // no utterance available to judge.
     }
+    return resolve(null); // no utterance available to judge.
   });
 });
 
@@ -137,8 +135,8 @@ exports.updateSystemResponseToUtterance = (uttrID) => {
   db.query(queries.getSystemResponsesRanked, [uttrID, 2], (err, result) => {
     if (err) { throw err; }
     if (result.length > 0) {
-      db.query(queries.updateSystemResponse, [result[0].templateID, uttrID], (err) => {
-        if (err) { throw err; }
+      db.query(queries.updateSystemResponse, [result[0].templateID, uttrID], (innerErr) => {
+        if (innerErr) { throw innerErr; }
       });
     }
   });
@@ -151,26 +149,25 @@ exports.getDialogueForUserResponse = (userID) => new Promise((resolve, reject) =
     [userID, votesCutOff, votesCutOff, successRatio], (err, result) => {
       if (err) { return reject(err); }
       if (result.length > 0) {
-        constructDialogue(new Dialogue(), result[0].uttrID)
+        return constructDialogue(new Dialogue(), result[0].uttrID)
           .then((dialogue) => resolve(dialogue));
-      } else {
-        resolve(null);
       }
+      return resolve(null);
     });
 });
 
 exports.getFinishedDialogues = () => new Promise((resolve, reject) => {
-  var promises = [];
+  const promises = [];
 
   db.query(queries.getFinishedUtterances, (err, result) => {
     if (err) { return reject(err); }
 
-    for (var i = 0; i < result.length; i++) {
+    for (let i = 0; i < result.length; i += 1) {
       promises.push(constructDialogue(new Dialogue(), result[i].uttrID));
     }
 
-    Promise.all(promises)
+    return Promise.all(promises)
       .then((dialogues) => { resolve(dialogues); })
-      .catch((err) => { reject(err); });
+      .catch((error) => { reject(error); });
   });
 });

@@ -14,13 +14,22 @@
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
         </div>
+<<<<<<< HEAD
         <h4 class="userUtterance" v-if="this.utterance">
+=======
+        <h4 class="userUtterance">
+>>>>>>> 79794993b40870891eb12fc0a4092c61499114a3
           Användare: {{ this.utterance }}
         </h4>
       </div>
     </div>
     <div v-else>
       <h2>Starta en ny dialog!</h2>
+      <div class="well">
+        <h4 class="userUtterance">
+          Användare: {{ this.utterance }}
+        </h4>
+      </div>
     </div>
     <div class="flexBoxLogin">
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
