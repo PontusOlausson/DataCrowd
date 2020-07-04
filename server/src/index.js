@@ -40,7 +40,7 @@ const app = express(); // Creates express app
 // const httpServer = http.createServer(app);
 
 const httpsServer = https.createServer(credentials, app);
-const io = require('socket.io').listen(httpServer); // Creates socket.io app
+const io = require('socket.io').listen(httpsServer); // Creates socket.io app
 
 // Setup middlewares
 app.use(betterLogging.expressMiddleware(console, {
