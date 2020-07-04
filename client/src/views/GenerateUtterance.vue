@@ -14,11 +14,6 @@
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
         </div>
-<<<<<<< HEAD
-        <h4 class="userUtterance" v-if="this.utterance">
-=======
-        <h4 class="userUtterance">
->>>>>>> 79794993b40870891eb12fc0a4092c61499114a3
           Användare: {{ this.utterance }}
         </h4>
       </div>
