@@ -1,13 +1,12 @@
 
 <template>
-  <div class="container-fluid" v-if="dialogue">
-    <div class="row" style="text-align: center">
-      <div class="col-md-4 col-md-offset-4">
+  <div class="sysDialog" v-if="dialogue">
+    <div class="row">
+      <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
         <h1>Fortsätt på denna dialog!</h1>
         <h4>
           Du har nu rollen som busschafför.
           Svara användaren genom att välja det av svaren som passar bäst, givet följande dialog.
-          
         </h4>
         <div class="well">
           <div class="dialogueTurn" v-for="utterance in dialogue.utterances"
@@ -26,31 +25,41 @@
           </button>
           <h3>Vilket av följande alternativ passar bäst?</h3>
         </div>
-      </div>
+        <div v-if="(counter >= 3)">
+          <br>
+          <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Börja om</button>
+          <br>
+        </div>
+        <div v-else>
+          <br>
+          <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/3</button>
+          <br>
+        </div>
     </div>
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="text-box col-md-8 col-md-offset-2">
         <div class="well" v-for="template in templates" v-bind:key="template.templateID"
          @click="pickSystemResponse(template.templateID)">
-          <h2>{{ template.template }}</h2>
+          <h4>{{ template.template }}</h4>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
-     aria-labelledby="infoModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="infoModalLabel">Guide</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Detta är förklaringen för sidan.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
+      <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
+       aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="infoModalLabel">Guide</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Detta är förklaringen för sidan.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
+            </div>
           </div>
         </div>
       </div>
@@ -59,6 +68,10 @@
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
     <h2>Seems like there is currently no utterance for you to respond to :(</h2>
     <h3>Try generating some new instead!</h3>
+    <div>
+      <br>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Börja om</button>
+    </div>
   </div>
 </template>
 
@@ -70,6 +83,7 @@ export default {
     dialogue: null,
     status: '',
     templates: [],
+    counter: 0,
   }),
   methods: {
     fetchDialogue() {
@@ -93,8 +107,14 @@ export default {
       })
         .then(() => {
           this.fetchDialogue();
+          this.counter += 1;
         })
         .catch(console.error);
+    },
+    goToNextStep() {
+      this.$router.push({
+        path: 'genUttr',
+      });
     },
   },
   created() {

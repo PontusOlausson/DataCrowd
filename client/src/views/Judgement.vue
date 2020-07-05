@@ -23,6 +23,14 @@
           v-on:click="passJudgement(0)" value="Bad" />
       </div>
     </div>
+    <div v-if="(counter >= 3)">
+      <br>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>
+    </div>
+    <div v-else>
+      <br>
+      <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/3</button>
+    </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -45,6 +53,10 @@
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
     <h2>Seems like there is currently no utterance that you can judge :(</h2>
     <h3>Try generating some new instead!</h3>
+    <div>
+      <br>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>
+    </div>
   </div>
 </template>
 
@@ -55,6 +67,7 @@ export default {
   data: () => ({
     dialogue: null,
     status: '',
+    counter: 0,
   }),
   methods: {
     fetchDialogue() {
@@ -78,8 +91,14 @@ export default {
       })
         .then(() => {
           this.fetchDialogue();
+          this.counter += 1;
         })
         .catch(console.error);
+    },
+    goToNextStep() {
+      this.$router.push({
+        path: 'sysres',
+      });
     },
   },
   created() {

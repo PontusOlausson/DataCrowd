@@ -54,6 +54,14 @@
         </div>
       </div>
     </div>
+    <div v-if="(counter >= 1)">
+      <br>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>
+    </div>
+    <div v-else>
+      <br>
+      <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/1</button>
+    </div>
   </div>
 </template>
 
@@ -67,6 +75,7 @@ export default {
     responseTo: null,
     statusText: '',
     status: null,
+    counter: 0,
   }),
   methods: {
     submitUtterance() {
@@ -94,6 +103,7 @@ export default {
         })
         .then(() => {
           this.fetchDialogue();
+          this.counter += 1;
         })
         .catch((error) => {
           throw error;
@@ -113,6 +123,11 @@ export default {
           }
         })
         .catch(console.error);
+    },
+    goToNextStep() {
+      this.$router.push({
+        path: 'judge',
+      });
     },
   },
   created() {
