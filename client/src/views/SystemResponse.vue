@@ -27,20 +27,25 @@
         </div>
         <div v-if="(counter >= 3)">
           <br>
-          <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Börja om</button>
+          <button type="button" v-on:click="goToNextStep()"
+           class="btn btn-success btn-lg btn-block">
+            Börja om
+          </button>
           <br>
         </div>
         <div v-else>
           <br>
-          <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/3</button>
+          <button type="button" class="btn btn-success btn-lg btn-block" disabled>
+            {{ this.counter }}/3
+          </button>
           <br>
         </div>
     </div>
     <div class="row">
       <div class="text-box col-md-8 col-md-offset-2">
-        <div class="well" v-for="template in templates" v-bind:key="template.templateID"
+        <div class="templateButton well well-sm col-md-4" v-for="template in templates" v-bind:key="template.templateID"
          @click="pickSystemResponse(template.templateID)">
-          <h4>{{ template.template }}</h4>
+          <div class="templateText">{{ template.template }}</div>
         </div>
       </div>
     </div>
@@ -70,7 +75,9 @@
     <h3>Try generating some new instead!</h3>
     <div>
       <br>
-      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Börja om</button>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">
+        Börja om
+      </button>
     </div>
   </div>
 </template>

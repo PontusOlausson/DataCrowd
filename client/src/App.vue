@@ -158,4 +158,22 @@ div.light-blue-background {
   display: flex;
   margin: 0 0 0 25 px;
 }
+
+.templateButton {
+  text-align: center;
+  margin-bottom: 0px !important;
+  height: 60px;
+  display: flex;
+  align-items: center; /* Vertical center alignment */
+  justify-content: center;
+}
+
+.templateButton:hover{
+  background-color: #5cb85c;
+  color: white;
+}
+
+.templateText {
+
+}
 </style>
