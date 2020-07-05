@@ -16,10 +16,10 @@
             <span class="icon-bar"></span>
           </button>
           <div
-            v-on:click="redirect('/')"
+            v-on:click="redirect('/about')"
             class="navbar-brand navbar-brand-centered"
             style="line-height: 1em; cursor: pointer;"
-          >Home</div>
+          >Om detta arbete</div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,9 +36,6 @@
             </li>
             <li v-on:click="redirect('/sysres')">
               <a style="cursor: pointer;">Choose system response</a>
-            </li>
-            <li v-on:click="redirect('/about')">
-              <a style="cursor: pointer;">Om detta arbete</a>
             </li>
           </ul>
         </div>

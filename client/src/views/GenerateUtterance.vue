@@ -22,7 +22,7 @@
     <div v-else>
       <h2>Starta en ny dialog!</h2>
       <div class="well">
-        <h4 class="userUtterance">
+        <h4 class="userUtterance"  v-if="this.utterance">
           Användare: {{ this.utterance }}
         </h4>
       </div>
