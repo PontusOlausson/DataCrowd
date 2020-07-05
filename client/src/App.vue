@@ -134,7 +134,6 @@ div.light-blue-background {
 .systemUtterance {
   text-align: left;
   color: green;
-  text-align: left;
 }
 
 .status-error-true {

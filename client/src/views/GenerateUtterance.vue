@@ -14,6 +14,7 @@
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
         </div>
+        <h4 class="userUtterance" v-if="this.utterance">
           Användare: {{ this.utterance }}
         </h4>
       </div>
@@ -36,7 +37,8 @@
          v-on:click="submitUtterance()" value="Skicka in" />
       </form>
     </div>
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
+     aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -56,11 +58,15 @@
     </div>
     <div v-if="(counter >= 1)">
       <br>
-      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">
+        Gå vidare
+      </button>
     </div>
     <div v-else>
       <br>
-      <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/1</button>
+      <button type="button" class="btn btn-success btn-lg btn-block" disabled>
+        {{ this.counter }}/1
+      </button>
     </div>
   </div>
 </template>
