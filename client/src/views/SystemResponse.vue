@@ -71,8 +71,8 @@
     </div>
   </div>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
-    <h2>Seems like there is currently no utterance for you to respond to :(</h2>
-    <h3>Try generating some new instead!</h3>
+    <h2>Det finns för närvarande inga repliker som du kan välja systemsvar till :(</h2>
+    <h3>Testa att generera några nya repliker istället!</h3>
     <div>
       <br>
       <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">

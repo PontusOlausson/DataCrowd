@@ -41,7 +41,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan.
+            Detta är förklaringen för sidan.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
@@ -51,8 +51,8 @@
     </div>
   </div>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-else>
-    <h2>Seems like there is currently no utterance that you can judge :(</h2>
-    <h3>Try generating some new instead!</h3>
+    <h2>Det finns för närvarande inga repliker som du kan bedöma :(</h2>
+    <h3>Testa att välja systemsvar istället!</h3>
     <div>
       <br>
       <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>

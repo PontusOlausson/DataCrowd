@@ -1,7 +1,7 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
-    <h1>What is your userID?</h1>
+    <h1>Logga in med ditt användarID!</h1>
     <div v-if="this.status" :class="status">{{ this.statusText }}</div>
     <div class="flexBoxLogin">
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
@@ -22,7 +22,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body guideText">
             <p>
               För att bidra till detta arbete måste du logga in med det användarID som du mottagit.<br>
               Dessa användarID har formen <i>NamnXX</i>, exempelvis Sven12.<br>
