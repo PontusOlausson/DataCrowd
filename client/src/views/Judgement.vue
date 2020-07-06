@@ -1,7 +1,7 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
-    <h1>Fetched utterance to judge!</h1>
+    <h1>Bedöm sista repliken i konversationen!</h1>
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
         <h4 class="userUtterance">
@@ -18,9 +18,9 @@
       </button>
       <div>
         <input class="btn btn-default" type="button"
-          v-on:click="passJudgement(1)" value="Good" />
+          v-on:click="passJudgement(1)" value="Bra" />
         <input class="btn btn-default" type="button"
-          v-on:click="passJudgement(0)" value="Bad" />
+          v-on:click="passJudgement(0)" value="Dålig" />
       </div>
     </div>
     <div v-if="(counter >= 3)">
@@ -40,8 +40,38 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            Detta är förklaringen för sidan.
+          <div class="modal-body guideText">
+            <h2>Du ska nu bedöma en replik!</h2>
+            <p>
+              Tyvärr passar inte alla repliker in i konversationen eller är relevanta för ändamålet.
+              Din uppgift nu är att bedöma om en replik passar bra eller dåligt i kontexten. Repliken
+              du ska bedöma är den <b>sista</b> i konversationen.
+            </p>
+            <p>
+              Tänk på att konversationen handlar om att en resenär ska försöka ta reda på information
+              om busslinjer och resor genom att hålla en dialog med en busschafför. Även repliker som
+              i sig passar in i konversationen är ibland tyvärr "dåliga" eftersom de handlar om något
+              som inte är relevant för kontexten bussresor.
+            </p>
+            <p>
+              Här är några exempel som skulle vara bra repliker, givet att de passar in i resten av
+              konversationen:
+              <ul>
+              <li><i>Hej, vet du vad slutstationen för buss #busslinje är?</i></li>
+              <li><i>Tack för svaret på min fråga, det var allt jag undrade.</i></li>
+              </ul>
+               Här är några exempel på repliker som inte passar detta ändamål:
+              <ul>
+              <li><i>Bonjour madame!</i></li>
+              <li><i>Hej, vad tycker du om den politiska situationen i Tyskland?</i></li>
+              </ul>
+            </p>
+            <p>
+              När du röstar finns det inga rätt eller fel! Tänk efter om du tycker att repliken passar
+              konversationen och om det är något som en busschafför kan svara på.
+              Rösta genom knapparna under och gör gärna det på 3 olika repliker innan
+              du går vidare till nästa steg.
+            </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>

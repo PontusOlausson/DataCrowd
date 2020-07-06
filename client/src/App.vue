@@ -19,7 +19,7 @@
             v-on:click="redirect('/about')"
             class="navbar-brand navbar-brand-centered"
             style="line-height: 1em; cursor: pointer;"
-          >Om detta arbete</div>
+          >Om arbetet</div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
