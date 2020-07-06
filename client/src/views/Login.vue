@@ -2,7 +2,7 @@
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
     <h1>What is your userID?</h1>
-    <h2>{{ this.status }}</h2>
+    <div v-if="this.status" :class="status">{{ this.statusText }}</div>
     <div class="flexBoxLogin">
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
         ?
@@ -23,7 +23,15 @@
             </button>
           </div>
           <div class="modal-body">
-            Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. Detta är förklaringen för sidan. 
+            <p>
+              För att bidra till detta arbete måste du logga in med det användarID som du mottagit.<br>
+              Dessa användarID har formen <i>NamnXX</i>, exempelvis Sven12.<br>
+              Syftet är att ge dig som användare rätt uppgifter att utföra, genom att hålla koll på din tidigare aktivitet.<br>
+            </p>
+            <p>
+              Vill du få ett användarID så att du kan vara med och bidra till arbetet? Toppen!
+              Hör av dig till Pontus Olausson eller Christoffer Linné så skapar vi ett åt dig!
+            </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
@@ -40,7 +48,8 @@ export default {
   components: {},
   data: () => ({
     userID: '',
-    status: '',
+    statusText: '',
+    status: null,
   }),
   methods: {
     login() {
@@ -66,36 +75,10 @@ export default {
         })
         .catch((error) => {
           console.error('Authentication failed unexpectedly');
+          this.status = 'status-error-true';
           error.text().then((text) => {
-            this.status = text;
+            this.statusText = text;
           });
-        });
-    },
-    register() {
-      fetch('/api/registerUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userID: this.userID,
-        }),
-      })
-        .then((resp) => {
-          if (resp.ok) return resp;
-          this.$router.push({
-            path: '/',
-          });
-          throw new Error(resp.text);
-        })
-        .then(() => {
-          this.$router.push({
-            path: '/',
-          });
-        })
-        .catch((error) => {
-          console.error('Registration failed unexpectedly');
-          throw error;
         });
     },
   },
