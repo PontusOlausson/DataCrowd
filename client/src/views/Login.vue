@@ -1,7 +1,7 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
-    <h1>Logga in med ditt användarID!</h1>
+    <h1>Logga in med ditt användarnamn!</h1>
     <div v-if="this.status" :class="status">{{ this.statusText }}</div>
     <div class="flexBoxLogin">
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
@@ -70,7 +70,7 @@ export default {
         .then(() => {
           this.$store.commit('setIsAuthenticated', true);
           this.$router.push({
-            path: 'genUttr',
+            path: 'about',
           });
         })
         .catch((error) => {
