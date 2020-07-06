@@ -22,7 +22,7 @@
     <div v-else>
       <h2>Starta en ny dialog!</h2>
       <div class="well">
-        <h4 class="userUtterance"  v-if="this.utterance">
+        <h4 class="userUtterance" v-if="this.utterance">
           Användare: {{ this.utterance }}
         </h4>
       </div>
@@ -37,8 +37,7 @@
          v-on:click="submitUtterance()" value="Skicka in" />
       </form>
     </div>
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
-     aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -47,8 +46,40 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            Detta är en förklaring för sidan.
+          <div class="modal-body guideText">
+            <h2>Du har nu rollen som en användare som pratar med en busschaufför!</h2>
+            <p>
+              Beroende på om det finns tidigare oavslutade konversationer i databasen eller inte
+              kommer du ombeds att antingen starta en ny konversation eller att fortsätta på en
+              existerande konversation.
+            </p>
+            <p>
+              Du väljer alltid själv hur din replik ser ut. Syftet med varje konversation ska dock
+              vara att ta reda på relevant information kring busslinjer och hållplatser så att du
+              kan planera din resa.
+            </p>
+            <p>
+              Bra saker att ha med i din fråga är busslinjer och hållplatser.
+              När du vill specificera en busslinje eller hållplats, använd taggarna #busslinje och
+              #plats istället för de faktiska busslinjerna eller platserna.
+              <br><br>
+              Exempelvis:
+             <ul>
+             <li><i>Hej, är det här buss 540?</i> -> <i>Hej, är det här buss #busslinje?</i></li>
+             <li><i>Hej, går den här bussen till KTH?</i> -> <i>Hej, går den här bussen till #plats?</i></li>
+             </ul>
+            </p>
+            <h3>Starta en ny konversation!</h3>
+            <p>
+              Du ska nu starta en ny konversation med en busschaufför! Du väljer själv vad du vill
+              säga, men börja gärna med en hälsningsfras tillsammans med en inledande fråga.
+            </p>
+            <h3>Fortsätt på en existerande konversation!</h3>
+            <p>
+              Du ska nu fortsätta på en existerande konversation! Läs igenom vad som har sagts
+              tidigare i konversationen och fundera på hur en naturlig fortsättning skulle låta.
+              Exempelvis kan du ställa ytterligare frågor eller tacka busschauffören för dens svar!
+            </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
