@@ -170,7 +170,7 @@ div.light-blue-background {
   color: white;
 }
 
-.templateText {
-
+.guideText {
+  text-align: left;
 }
 </style>
