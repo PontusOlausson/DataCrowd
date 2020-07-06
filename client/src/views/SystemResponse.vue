@@ -59,8 +59,42 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              Detta är förklaringen för sidan.
+            <div class="modal-body guideText">
+              <h2>Du ska nu välja ett svar i rollen som busschafför!</h2>
+              <p>
+                Du bör nu se en replik eller en konversation mellan en användare och en resenär. Din
+                uppgift nu är att välja ett svar utifrån rollen som busschafför. Försök välja ett av
+                svaren som passar bra i konversationen och som besvarar det resenären undrar.
+              </p>
+              <p>
+                I vissa fall skulle flera svar kunna passa in och besvara resenärens funderingar.
+                Då har du möjlighet att vara kreativ och välja något du tycker skulle vara intressant.
+                I vissa fall passar inget svar bra. Då kan du antingen välja ett svar som passar ganska
+                bra alternativt välja svaret "Inget alternativ passar". Om du anser att busschaffören
+                inte borde säga något mer utan att konversationen är klar, välj då alternativet "Dialogen är klar".
+              </p>
+              <p>
+                Här är ett par exempel som skulle vara bra svar på den tidigare konversationen,
+                kursiva rader är tidigare repliker från resenären, fetstilta kursiva rader är svar från busschaffören:
+                <ul>
+                <li><i>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</i></li>
+                <li><i><b>Busschaufför: Nästa buss på den här linjen går klockan #tid.</b></i></li>
+                </ul>
+                <ul>
+                <li><i>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</i></li>
+                <li><i><b>Busschaufför: Slutstationen för buss #busslinje är #plats.</b></i></li>
+                <li><i>Resenär: Tack så mycket!</i></li>
+                <li><i><b>Busschaufför: Kan jag hjälpa dig med något mer?</b></i></li>
+                <li><i>Resenär: Nej, det är bra tack.</i></li>
+                <li><i><b>Busschaufför: Dialogen är klar</b></i></li>
+                </ul>
+              </p>
+              <p>
+                Välj något svar som du tycker skulle passa bra i en konversation mellan
+                en busschafför och en resenär samt som besvarar resenärens funderingar.
+                Välj svar genom att klicka på svarsalternativet som passar bäst. Gör gärna det för 3 olika konversationer
+                innan du går vidare.
+              </p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-Primary" data-dismiss="modal">Stäng</button>
