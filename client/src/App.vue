@@ -29,13 +29,13 @@
               <a style="cursor: pointer;">Login</a>
             </li>
             <li v-on:click="redirect('/genUttr')">
-              <a style="cursor: pointer;">Generate utterance</a>
+              <a style="cursor: pointer;">Generera replik</a>
             </li>
             <li v-on:click="redirect('/judge')">
-              <a style="cursor: pointer;">Judge</a>
+              <a style="cursor: pointer;">Bedöm repliker</a>
             </li>
             <li v-on:click="redirect('/sysres')">
-              <a style="cursor: pointer;">Choose system response</a>
+              <a style="cursor: pointer;">Välj systemsvar</a>
             </li>
           </ul>
         </div>
