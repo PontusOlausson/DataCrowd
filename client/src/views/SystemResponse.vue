@@ -6,13 +6,13 @@
         <h1>Fortsätt på denna dialog!</h1>
         <h4>
           Du har nu rollen som busschafför.
-          Svara användaren genom att välja det av svaren som passar bäst, givet följande dialog.
+          Svara resenären genom att välja det av svaren som passar bäst, givet följande dialog.
         </h4>
         <div class="well">
           <div class="dialogueTurn" v-for="utterance in dialogue.utterances"
            :key="utterance.uttrID">
             <h4 class="userUtterance">
-              Användare: {{ utterance.uttr }}
+              Resenär: {{ utterance.uttr }}
             </h4>
             <h4 v-if="utterance.systemResponseText" class="systemUtterance">
               Busschaufför: {{ utterance.systemResponseText }}
@@ -62,7 +62,7 @@
             <div class="modal-body guideText">
               <h2>Du ska nu välja ett svar i rollen som busschafför!</h2>
               <p>
-                Du bör nu se en replik eller en konversation mellan en användare och en resenär. Din
+                Du bör nu se en replik eller en konversation mellan en busschafför och en resenär. Din
                 uppgift nu är att välja ett svar utifrån rollen som busschafför. Försök välja ett av
                 svaren som passar bra i konversationen och som besvarar det resenären undrar.
               </p>

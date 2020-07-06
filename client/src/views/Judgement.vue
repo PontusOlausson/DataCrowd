@@ -5,7 +5,7 @@
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
         <h4 class="userUtterance">
-          Användare: {{ utterance.uttr }}
+          Resenär: {{ utterance.uttr }}
         </h4>
         <h4 v-if="utterance.systemResponseText" class="systemUtterance">
           Busschaufför: {{ utterance.systemResponseText }}

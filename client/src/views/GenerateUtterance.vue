@@ -8,14 +8,14 @@
       <div class="well">
         <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
           <h4 class="userUtterance">
-            Användare: {{ utterance.uttr }}
+            Resenär: {{ utterance.uttr }}
           </h4>
           <h4 class="systemUtterance">
             Busschaufför: {{ utterance.systemResponseText }}
           </h4>
         </div>
         <h4 class="userUtterance" v-if="this.utterance">
-          Användare: {{ this.utterance }}
+          Resenär: {{ this.utterance }}
         </h4>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <h2>Starta en ny dialog!</h2>
       <div class="well">
         <h4 class="userUtterance" v-if="this.utterance">
-          Användare: {{ this.utterance }}
+          Resenär: {{ this.utterance }}
         </h4>
       </div>
     </div>
@@ -47,7 +47,7 @@
             </button>
           </div>
           <div class="modal-body guideText">
-            <h2>Du har nu rollen som en användare som pratar med en busschaufför!</h2>
+            <h2>Du har nu rollen som en resenär som pratar med en busschaufför!</h2>
             <p>
               Beroende på om det finns tidigare oavslutade konversationer i databasen eller inte
               kommer du ombeds att antingen starta en ny konversation eller att fortsätta på en
