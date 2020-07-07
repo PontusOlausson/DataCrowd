@@ -8,7 +8,7 @@
     busschafför och resenär. Denna konversationsdata kommer användas för att träna en machine learning-modell för
     att undersöka hur bra man kan träna en dator att jobba som en busschafför.
   </p>
-  <h3 >Hur går det till?</h3>
+  <h3>Hur går det till?</h3>
   <p>
     Du kommer att hjälpa till att generera konversationer genom en metod i tre delar. Det börjar med att du först
     ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Första gången du går
