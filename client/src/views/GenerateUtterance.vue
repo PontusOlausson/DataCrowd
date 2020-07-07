@@ -21,7 +21,7 @@
       </div>
     </div>
     <div v-else>
-      <h2>Starta en ny dialog!</h2>
+      <h2>Starta en ny konversation!</h2>
       <div class="well">
         <h4 class="userUtterance" v-if="this.utterance">
           Resenär: {{ this.utterance }}
@@ -34,9 +34,11 @@
       </button>
       <div class="loginForm">
         <input class="form-control" type="text" v-model="utterance" @keyup.enter="submitUtterance"/>
-        <input class="btn btn-secondary" type="button" v-on:click="submitUtterance" value="Skicka in" />
       </div>
     </div>
+    <br>
+    <input class="btn btn-success btn-lg btn-block" type="button" v-on:click="submitUtterance" value="Skicka in" />
+    <br>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -92,15 +94,11 @@
         </div>
       </div>
     </div>
-    <div v-if="(counter >= 1)">
-      <br>
-      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">
-        Gå vidare
-      </button>
+    <div v-if="(counter >= 1)" style="text-align:right">
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success" style="width:150px">Gå vidare</button>
     </div>
-    <div v-else>
-      <br>
-      <button type="button" class="btn btn-success btn-lg btn-block" disabled>
+    <div v-else style="text-align:right">
+      <button type="button" class="btn btn-success" disabled style="width:150px">
         {{ this.counter }}/1
       </button>
     </div>

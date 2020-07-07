@@ -25,21 +25,14 @@
           </button>
           <h3>Vilket av följande alternativ passar bäst?</h3>
         </div>
-        <div v-if="(counter >= 3)">
-          <br>
-          <button type="button" v-on:click="goToNextStep()"
-           class="btn btn-success btn-lg btn-block">
-            Börja om
-          </button>
-          <br>
+        <br>
+        <div v-if="(counter >= 3)" style="text-align:right">
+          <button type="button" v-on:click="goToNextStep()" class="btn btn-success" style="width:150px">Börja om</button>
         </div>
-        <div v-else>
-          <br>
-          <button type="button" class="btn btn-success btn-lg btn-block" disabled>
-            {{ this.counter }}/3
-          </button>
-          <br>
+        <div v-else style="text-align:right">
+          <button type="button" class="btn btn-success" disabled style="width:150px">{{ this.counter }}/3</button>
         </div>
+        <br>
     </div>
     <div class="row">
       <div class="text-box col-md-8 col-md-offset-2">

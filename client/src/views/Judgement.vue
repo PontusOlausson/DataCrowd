@@ -23,13 +23,12 @@
           v-on:click="passJudgement(0)" value="Dålig" />
       </div>
     </div>
-    <div v-if="(counter >= 3)">
-      <br>
-      <button type="button" v-on:click="goToNextStep()" class="btn btn-success btn-lg btn-block">Gå vidare</button>
+    <br>
+    <div v-if="(counter >= 3)" style="text-align:right">
+      <button type="button" v-on:click="goToNextStep()" class="btn btn-success" style="width:150px">Gå vidare</button>
     </div>
-    <div v-else>
-      <br>
-      <button type="button" class="btn btn-success btn-lg btn-block" disabled>{{this.counter}}/3</button>
+    <div v-else style="text-align:right">
+      <button type="button" class="btn btn-success" disabled  style="width:150px">{{this.counter}}/3</button>
     </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
