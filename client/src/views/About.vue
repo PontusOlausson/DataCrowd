@@ -11,26 +11,48 @@
   <h3>Hur går det till?</h3>
   <p>
     Du kommer att hjälpa till att generera konversationer genom en metod i tre delar. Det börjar med att du först
-    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Hur detta ska göras
-    förklaras på varje sida om du klickar på [?]-knappen.
+    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Första gången du går
+    igenom varje steg, klicka gärna på <button type="button" class="btn btn-info btn-xs">?</button>-knappen för
+    tydligare instruktioner.
   </p>
-  <p>För att det ska bli tydligare: här kommer 2 exempel på färdiga konversationer mellan en resenär och en busschafför:</p>
-  <div class="container-fluid">
-    <div class="well col-md-6">
-      <p class="userUtterance"><b>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</b></p>
-      <p class="systemUtterance"><b>Busschaufför: Nästa buss på den här linjen går klockan #tid.</b></p>
-      <p class="userUtterance"><b>Resenär: Då tar jag den också.</b></p>
-      <p class="systemUtterance"><b>Busschaufför: Dialogen är klar</b></p>
+  <p>
+    När du är i rollen av en resenär är din uppgift att försöka ta reda på saker om busslinjer genom att prata med och
+    ställa frågor till busschaffören. Du kan fråga om saker som är relevanta till busslinjer, som exempelvis:
+    busslinje, hållplatser, slutstationer, tidstabeller, mm.
+  </p>
+  <p>
+    När du vill prata om en specifik busslinje eller hållplats, använd taggarna #busslinje och
+    #plats istället för de faktiska busslinjerna eller platserna.
+    <br><br>
+    Exempelvis:
+   <ul>
+   <li><i>Hej, är det här buss 540?</i> -> <i>Hej, är det här buss #busslinje?</i></li>
+   <li><i>Hej, går den här bussen till KTH?</i> -> <i>Hej, går den här bussen till #plats?</i></li>
+   </ul>
+  </p>
+  <p>
+    För att det ska bli tydligare så kommer här några exempel på färdiga konversationer mellan en resenär och en busschafför:
+    <div class="flexBoxLogin">
+      <div class="well">
+        <ul>
+        <li><i>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</i></li>
+        <li><i>Busschaufför: Nästa buss på den här linjen går klockan #tid.</i></li>
+        <li><i>Resenär: Då tar jag den också.</i></li>
+        <li><i>Busschaufför: Dialogen är klar</i></li>
+        </ul>
+      </div>
+      <div class="well">
+        <ul>
+        <li><i>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</i></li>
+        <li><i>Busschaufför: Slutstationen för buss #busslinje är #plats.</i></li>
+        <li><i>Resenär: Tack så mycket!</i></li>
+        <li><i>Busschaufför: Kan jag hjälpa dig med något mer?</i></li>
+        <li><i>Resenär: Nej, det är bra tack.</i></li>
+        <li><i>Dialogen är klar</i></li>
+        </ul>
+      </div>
     </div>
-    <div class="well col-md-6">
-      <p class="userUtterance"><b>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</b></p>
-      <p class="systemUtterance"><b>Busschaufför: Slutstationen för buss #busslinje är #plats.</b></p>
-      <p class="userUtterance"><b>Resenär: Tack så mycket!</b></p>
-      <p class="systemUtterance"><b>Busschaufför: Kan jag hjälpa dig med något mer?</b></p>
-      <p class="userUtterance"><b>Resenär: Nej, det är bra tack.</b></p>
-      <p class="systemUtterance"><b>Busschaufför: Dialogen är klar</b></p>
-    </div>
-  </div>
+  </p>
   <h3>Varför har jag ett användarnamn?</h3>
   <p>
     Du har ett personligt användarnamn som du loggar in med innan du kan börja
