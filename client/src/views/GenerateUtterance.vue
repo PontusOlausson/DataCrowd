@@ -31,11 +31,10 @@
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
         ?
       </button>
-      <form class="loginForm" id="genUttrForm">
-        <input class="form-control" type="text" v-model="utterance" required autofocus />
-        <input class="btn btn-secondary" type="button"
-         v-on:click="submitUtterance()" value="Skicka in" />
-      </form>
+      <div class="loginForm">
+        <input class="form-control" type="text" v-model="utterance" @keyup.enter="submitUtterance"/>
+        <input class="btn btn-secondary" type="button" v-on:click="submitUtterance" value="Skicka in" />
+      </div>
     </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -65,8 +64,8 @@
               <br><br>
               Exempelvis:
              <ul>
-             <li><i>Hej, är det här buss 540?</i> -> <i>Hej, är det här buss #busslinje?</i></li>
-             <li><i>Hej, går den här bussen till KTH?</i> -> <i>Hej, går den här bussen till #plats?</i></li>
+               <li><i>Hej, är det här buss 540?</i> -> <i>Hej, är det här buss #busslinje?</i></li>
+               <li><i>Hej, går den här bussen till KTH?</i> -> <i>Hej, går den här bussen till #plats?</i></li>
              </ul>
             </p>
             <h3>Starta en ny konversation!</h3>
@@ -131,7 +130,6 @@ export default {
           resp.text().then((text) => {
             this.statusText = `${text} \n ${this.utterance}`;
 
-            document.getElementById('genUttrForm').reset();
             this.utterance = '';
           });
 
