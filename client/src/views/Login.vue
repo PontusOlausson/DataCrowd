@@ -24,13 +24,13 @@
           </div>
           <div class="modal-body guideText">
             <p>
-              För att bidra till detta arbete måste du logga in med det användarID som du mottagit.<br>
-              Dessa användarID har formen <i>NamnXX</i>, exempelvis Sven12.<br>
+              För att bidra till detta arbete måste du logga in med det användarnamn som du har fått.<br>
+              Dessa användarnamn har formen <i>NamnXX</i>, exempelvis Sven12.<br>
               Syftet är att ge dig som användare rätt uppgifter att utföra, genom att hålla koll på din tidigare aktivitet.<br>
             </p>
             <p>
-              Vill du få ett användarID så att du kan vara med och bidra till arbetet? Toppen!
-              Hör av dig till Pontus Olausson eller Christoffer Linné så skapar vi ett åt dig!
+              Har du inte fått ett användarnamn men vill vara med och bidra till arbetet? Toppen!
+              Hör av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se) så skapar vi ett åt dig!
             </p>
           </div>
           <div class="modal-footer">

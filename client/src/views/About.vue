@@ -11,7 +11,8 @@
   <h3>Hur går det till?</h3>
   <p>
     Du kommer att hjälpa till att generera konversationer genom en metod i tre delar. Det börjar med att du först
-    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Första gången du går
+    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Du kan 
+    gå igenom dessa steg hur många gånger som helst, ju fler gånger desto bättre data får vi. Första gången du går
     igenom varje steg, klicka gärna på <button type="button" class="btn btn-info btn-xs">?</button>-knappen för
     tydligare instruktioner.
   </p>
@@ -61,7 +62,7 @@
     själv eller rösta på samma replik flera gånger.
   </p>
   <p>
-    Om du har något feedback eller om du undrar något, tveka inte att maila till oss:
+    Om du har någon feedback eller om du undrar något, tveka inte att maila till oss:
     <br><b>Christoffer Linné, clinne@kth.se</b>
     <br><b>Pontus Olausson, polaus@kth.se</b>
   </p>

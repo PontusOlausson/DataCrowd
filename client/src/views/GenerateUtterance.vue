@@ -1,7 +1,8 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center">
-    <h1>Generera ett yttrande!</h1>
+    <h1>Generera en replik!</h1>
+    <h3>Du är nu en resenär som ska prata med en busschafför</h3>
     <div v-if="status" :class="status">{{ statusText }}</div>
     <div v-if="dialogue">
       <h2>Skriv ett svar till följande dialog:</h2>
@@ -55,12 +56,16 @@
             </p>
             <p>
               Du väljer alltid själv hur din replik ser ut. Syftet med varje konversation ska dock
-              vara att ta reda på relevant information kring busslinjer och hållplatser så att du
+              vara att ta reda på relevant information om bussresor och busslinjer så att du
               kan planera din resa.
             </p>
             <p>
-              Bra saker att ha med i din fråga är busslinjer och hållplatser.
-              När du vill specificera en busslinje eller hållplats, använd taggarna #busslinje och
+              Nu är du i rollen av en resenär. Din uppgift är att försöka ta reda på saker om busslinjer genom att prata med och
+              ställa frågor till busschaffören. Du kan fråga om saker som är relevanta till busslinjer, som exempelvis:
+              busslinje, hållplatser, slutstationer, tidstabeller, mm.
+            </p>
+            <p>
+              När du vill prata om en specifik busslinje eller hållplats, använd taggarna #busslinje och
               #plats istället för de faktiska busslinjerna eller platserna.
               <br><br>
               Exempelvis:
@@ -78,7 +83,8 @@
             <p>
               Du ska nu fortsätta på en existerande konversation! Läs igenom vad som har sagts
               tidigare i konversationen och fundera på hur en naturlig fortsättning skulle låta.
-              Exempelvis kan du ställa ytterligare frågor eller tacka busschauffören för dens svar!
+              Om du känner att resenären inte har fått tillräcklig information kan du fortsätta fråga,
+              eller så kan du välja att inte fråga något mer och avsluta konversationen.
             </p>
           </div>
           <div class="modal-footer">
