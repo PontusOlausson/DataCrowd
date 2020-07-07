@@ -8,31 +8,29 @@
     busschafför och resenär. Denna konversationsdata kommer användas för att träna en machine learning-modell för
     att undersöka hur bra man kan träna en dator att jobba som en busschafför.
   </p>
-  <h3 >Hur går det till?</h3>
+  <h3>Hur går det till?</h3>
   <p>
     Du kommer att hjälpa till att generera konversationer genom en metod i tre delar. Det börjar med att du först
     ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Hur detta ska göras
     förklaras på varje sida om du klickar på [?]-knappen.
   </p>
-  <p>
-    För att det ska bli tydligare: här kommer några exempel på färdiga konversationer mellan en resenär och en busschafför:
-    <div class=flexBoxLogin>
-      <ul>
-      <li><i>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</i></li>
-      <li><i>Busschaufför: Nästa buss på den här linjen går klockan #tid.</i></li>
-      <li><i>Resenär: Då tar jag den också.</i></li>
-      <li><i>Busschaufför: Dialogen är klar</i></li>
-      </ul>
-      <ul>
-      <li><i>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</i></li>
-      <li><i>Busschaufför: Slutstationen för buss #busslinje är #plats.</i></li>
-      <li><i>Resenär: Tack så mycket!</i></li>
-      <li><i>Busschaufför: Kan jag hjälpa dig med något mer?</i></li>
-      <li><i>Resenär: Nej, det är bra tack.</i></li>
-      <li><i>Busschaufför: Dialogen är klar</i></li>
-      </ul>
+  <p>För att det ska bli tydligare: här kommer 2 exempel på färdiga konversationer mellan en resenär och en busschafför:</p>
+  <div class="container-fluid">
+    <div class="well col-md-6">
+      <p class="userUtterance"><b>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</b></p>
+      <p class="systemUtterance"><b>Busschaufför: Nästa buss på den här linjen går klockan #tid.</b></p>
+      <p class="userUtterance"><b>Resenär: Då tar jag den också.</b></p>
+      <p class="systemUtterance"><b>Busschaufför: Dialogen är klar</b></p>
     </div>
-  </p>
+    <div class="well col-md-6">
+      <p class="userUtterance"><b>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</b></p>
+      <p class="systemUtterance"><b>Busschaufför: Slutstationen för buss #busslinje är #plats.</b></p>
+      <p class="userUtterance"><b>Resenär: Tack så mycket!</b></p>
+      <p class="systemUtterance"><b>Busschaufför: Kan jag hjälpa dig med något mer?</b></p>
+      <p class="userUtterance"><b>Resenär: Nej, det är bra tack.</b></p>
+      <p class="systemUtterance"><b>Busschaufför: Dialogen är klar</b></p>
+    </div>
+  </div>
   <h3>Varför har jag ett användarnamn?</h3>
   <p>
     Du har ett personligt användarnamn som du loggar in med innan du kan börja
