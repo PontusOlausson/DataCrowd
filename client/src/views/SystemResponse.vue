@@ -142,6 +142,7 @@ export default {
         .then(() => {
           this.fetchDialogue();
           this.counter += 1;
+          window.scrollTo(0, 0);
         })
         .catch(console.error);
     },
