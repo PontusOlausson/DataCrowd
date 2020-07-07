@@ -7,11 +7,10 @@
       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
         ?
       </button>
-      <form class="loginForm">
-        <input class="form-control" type="text" v-model="userID" required autofocus />
-        <input class="btn btn-secondary" type="button"
-         v-on:click="login()" value="Login" />
-      </form>
+      <div class="loginForm">
+        <input class="form-control" type="text" v-model="userID" @keyup.enter="login" required />
+        <input class="btn btn-secondary" type="button" value="Login" v-on:click="login"/>
+      </div>
     </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
