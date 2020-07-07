@@ -4,7 +4,7 @@
     <h1>Bedöm sista repliken i konversationen!</h1>
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
-        <h4 class="userUtterance">
+        <h4 v-bind:class="{ userUtterance: true, lastUtterance: !utterance.systemResponseText }">
           Resenär: {{ utterance.uttr }}
         </h4>
         <h4 v-if="utterance.systemResponseText" class="systemUtterance">

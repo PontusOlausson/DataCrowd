@@ -178,4 +178,8 @@ div.light-blue-background {
 .guideText {
   text-align: left;
 }
+
+.lastUtterance {
+  background-color: yellow;
+}
 </style>
