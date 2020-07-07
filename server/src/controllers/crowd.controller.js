@@ -16,6 +16,10 @@ router.post('/submitUtterance', (req, res) => {
     res.status(422).send('testUttr är en testkod för fel.');
     return;
   }
+  if (utterance === '') {
+    res.status(422).send('Skriv en replik.');
+    return;
+  }
 
   // TODO:
   // Control the input:
