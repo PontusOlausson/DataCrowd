@@ -11,7 +11,7 @@
   <h3>Hur går det till?</h3>
   <p>
     Du kommer att hjälpa till att generera konversationer genom en metod i tre delar. Det börjar med att du först
-    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Du kan 
+    ska (1) Generera en replik som resenär, (2) Bedöma en annan replik, och (3) Välja svar som busschafför. Du kan
     gå igenom dessa steg hur många gånger som helst, ju fler gånger desto bättre data får vi. Första gången du går
     igenom varje steg, klicka gärna på <button type="button" class="btn btn-info btn-xs">?</button>-knappen för
     tydligare instruktioner.
@@ -33,24 +33,18 @@
   </p>
   <p>
     För att det ska bli tydligare så kommer här några exempel på färdiga konversationer mellan en resenär och en busschafför:
-    <div class="flexBoxLogin">
-      <div class="well">
-        <ul>
-        <li><i>Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</i></li>
-        <li><i>Busschaufför: Nästa buss på den här linjen går klockan #tid.</i></li>
-        <li><i>Resenär: Då tar jag den också.</i></li>
-        <li><i>Busschaufför: Dialogen är klar</i></li>
-        </ul>
+    <div class="utteranceContainer">
+      <div class="well" style="width:49%">
+        <h5 class="userUtterance">Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</h5>
+        <h5 class="systemUtterance">Busschaufför: Slutstationen för buss #busslinje är #plats.</h5>
+        <h5 class="userUtterance">Resenär: Tack så mycket!</h5>
+        <h5 class="systemUtterance">Busschaufför: Kan jag hjälpa dig med något mer?</h5>
+        <h5 class="userUtterance">Resenär: Nej, det är bra tack.</h5>
       </div>
-      <div class="well">
-        <ul>
-        <li><i>Resenär: Hej, vet du vad slutstationen för buss #busslinje är?</i></li>
-        <li><i>Busschaufför: Slutstationen för buss #busslinje är #plats.</i></li>
-        <li><i>Resenär: Tack så mycket!</i></li>
-        <li><i>Busschaufför: Kan jag hjälpa dig med något mer?</i></li>
-        <li><i>Resenär: Nej, det är bra tack.</i></li>
-        <li><i>Dialogen är klar</i></li>
-        </ul>
+      <div class="well" style="width:49%">
+        <h5 class="userUtterance">Resenär: Min kompis hinner inte till den här bussen. När går nästa buss?</h5>
+        <h5 class="systemUtterance">Busschaufför: Nästa buss på den här linjen går klockan #tid.</h5>
+        <h5 class="userUtterance">Resenär: Då tar jag den också.</h5>
       </div>
     </div>
   </p>
