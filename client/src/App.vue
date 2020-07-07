@@ -156,6 +156,11 @@ div.light-blue-background {
   margin: 0 0 0 25 px;
 }
 
+.utteranceContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .templateButton {
   text-align: center;
   margin-bottom: 0px !important;

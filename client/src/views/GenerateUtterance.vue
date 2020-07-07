@@ -28,13 +28,9 @@
         </h4>
       </div>
     </div>
-    <div class="flexBoxLogin">
-      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
-        ?
-      </button>
-      <div class="loginForm">
-        <input class="form-control" type="text" v-model="utterance" @keyup.enter="submitUtterance"/>
-      </div>
+    <div class="utteranceContainer">
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">?</button>
+      <input class="form-control" type="text" v-model="utterance" @keyup.enter="submitUtterance" style="width:90%"/>
     </div>
     <br>
     <input class="btn btn-success btn-lg btn-block" type="button" v-on:click="submitUtterance" value="Skicka in" />

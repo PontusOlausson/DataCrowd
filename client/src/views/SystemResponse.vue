@@ -23,7 +23,7 @@
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
             ?
           </button>
-          <h3>Vilket av följande alternativ passar bäst?</h3>
+          <h3>Vilket av följande svar passar bäst?</h3>
         </div>
         <br>
         <div v-if="(counter >= 3)" style="text-align:right">
