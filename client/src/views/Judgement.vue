@@ -1,7 +1,7 @@
 
 <template>
   <div class="text-box col-md-4 col-md-offset-4" style="text-align: center" v-if="dialogue">
-    <h1>Bedöm sista repliken i konversationen!</h1>
+    <h1>Bedöm den markerade repliken!</h1>
     <div class="well">
       <div class="dialogueTurn" v-for="utterance in dialogue.utterances" :key="utterance.uttrID">
         <h4 v-bind:class="{ userUtterance: true, lastUtterance: !utterance.systemResponseText }">
