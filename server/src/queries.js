@@ -72,7 +72,7 @@ exports.getUtteranceForUserResponse = 'SELECT u.* \
     LEFT OUTER JOIN templates \
     ON userUtterances.systemResponse = templates.templateID \
     WHERE systemResponse IS NOT NULL \
-    AND systemResponse != 1 AND systemResponse != 2 \
+    AND systemResponse != 0 AND systemResponse != 1 \
   ) AS u \
   LEFT OUTER JOIN \
   ( \
