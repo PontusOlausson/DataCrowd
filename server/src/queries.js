@@ -55,7 +55,7 @@ exports.getUtterance = 'SELECT userUtterances.*, template AS systemResponseText 
   LEFT OUTER JOIN templates \
   ON userUtterances.systemResponse = templates.templateID \
   WHERE userUtterances.uttrID = ?';
-exports.getFinishedUtterances = 'SELECT * FROM userUtterances WHERE systemResponse = 1';
+exports.getFinishedUtterances = 'SELECT * FROM userUtterances WHERE systemResponse = 0';
 exports.addSystemResponse = 'INSERT INTO systemResponses (templateID, uttrID, userID) VALUES (?, ?, ?)';
 exports.getSystemResponsesRanked = 'SELECT templateID, COUNT(templateID) AS votes \
   FROM systemResponses \
