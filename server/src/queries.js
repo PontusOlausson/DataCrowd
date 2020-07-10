@@ -29,7 +29,8 @@ exports.getUtteranceForJudgement = 'SELECT u.* \
     SELECT uttrID FROM judgements WHERE userID = ? \
   ) AS j \
   ON u.uttrID = j.uttrID \
-  WHERE j.uttrID IS NULL';
+  WHERE j.uttrID IS NULL \
+  ORDER BY responseTo DESC';
 exports.getUtteranceForSystemResponse = 'SELECT u.* \
   FROM \
   ( \
@@ -40,7 +41,7 @@ exports.getUtteranceForSystemResponse = 'SELECT u.* \
     ON userUtterances.systemResponse = templates.templateID \
     WHERE userUtterances.systemResponse IS NULL \
     GROUP BY userUtterances.uttrID \
-HAVING votes >= ? AND score >= ? \
+    HAVING votes >= ? AND score >= ? \
   ) AS u \
   LEFT OUTER JOIN \
   ( \
@@ -48,7 +49,7 @@ HAVING votes >= ? AND score >= ? \
   ) AS s \
   ON u.uttrID = s.uttrID \
   WHERE s.uttrID IS NULL \
-  LIMIT 1';
+  ORDER BY responseTo DESC';
 exports.addJudgement = 'INSERT INTO judgements (uttrID, userID, score) VALUES (?, ?, ?)';
 exports.getUtterance = 'SELECT userUtterances.*, template AS systemResponseText \
   FROM userUtterances \
