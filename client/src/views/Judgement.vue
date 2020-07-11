@@ -28,7 +28,7 @@
       <button type="button" v-on:click="goToNextStep()" class="btn btn-success" style="width:150px">Gå vidare</button>
     </div>
     <div v-else style="text-align:right">
-      <button type="button" class="btn btn-success" disabled  style="width:150px">{{this.counter}}/3</button>
+      <button type="button" class="btn btn-success" disabled  style="width:150px">{{this.counter}}/6</button>
     </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
