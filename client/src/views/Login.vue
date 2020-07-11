@@ -12,6 +12,7 @@
         <input class="btn btn-secondary" type="button" value="Login" v-on:click="login"/>
       </div>
     </div>
+    <input class="btn btn-secondary" type="button" value="Registrera användarnamn" v-on:click="register"/>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -79,6 +80,24 @@ export default {
             this.statusText = text;
           });
         });
+    },
+    register() {
+      fetch('/api/registerUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: this.userID,
+        }),
+      })
+        .then((resp) => {
+          this.status = `status-error-${!resp.ok}`;
+          resp.text().then((text) => {
+            this.statusText = text;
+          });
+        })
+        .catch(err => console.error(err));
     },
   },
 };
