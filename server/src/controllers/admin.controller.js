@@ -7,25 +7,6 @@ const model = require('../model.js');
 
 const router = express.Router();
 
-/**
- * Attempts to register a new user.
- * @param {String} req.body.userID - A string that uniquely identifies the new user.
- * @returns {void}
- */
-router.post('/registerUser', (req, res) => {
-  model.findUser(req.body.userID)
-    .then((maybeUser) => {
-      if (maybeUser !== undefined) {
-        res.status(400).send(`Assistant with name ${req.body.userID} already exists.`);
-      } else {
-        model.addUser(req.body.userID, 0);
-        res.sendStatus(200);
-      }
-    })
-    .catch((err) => {
-      throw err;
-    });
-});
 
 /**
  * Fetch the list of users.

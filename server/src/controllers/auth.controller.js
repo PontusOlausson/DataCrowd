@@ -92,4 +92,24 @@ router.post('/authenticate', (req, res) => {
     });
 });
 
+/**
+ * Attempts to register a new user.
+ * @param {String} req.body.userID - A string that uniquely identifies the new user.
+ * @returns {void}
+ */
+router.post('/registerUser', (req, res) => {
+  model.findUser(req.body.userID)
+    .then((maybeUser) => {
+      if (maybeUser !== undefined) {
+        res.status(400).send(`Användarnamnet ${req.body.userID} är redan upptaget.`);
+      } else {
+        model.addUser(req.body.userID, 0);
+        res.status(201).send(`Användarnamnet ${req.body.userID} har skapats!`);
+      }
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
 module.exports = { router, requireAuth, requireAdmin };
