@@ -26,11 +26,11 @@
           <h3>Vilket av följande svar passar bäst?</h3>
         </div>
         <br>
-        <div v-if="(counter >= 3)" style="text-align:right">
+        <div v-if="(counter >= 6)" style="text-align:right">
           <button type="button" v-on:click="goToNextStep()" class="btn btn-success" style="width:150px">Börja om</button>
         </div>
         <div v-else style="text-align:right">
-          <button type="button" class="btn btn-success" disabled style="width:150px">{{ this.counter }}/3</button>
+          <button type="button" class="btn btn-success" disabled style="width:150px">{{ this.counter }}/6</button>
         </div>
         <br>
     </div>
