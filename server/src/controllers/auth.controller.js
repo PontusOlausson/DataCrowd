@@ -98,7 +98,13 @@ router.post('/authenticate', (req, res) => {
  * @returns {void}
  */
 router.post('/registerUser', (req, res) => {
+<<<<<<< HEAD
   
+=======
+  if (req.body.userID.length <= 4) {
+    return res.status(400).send(`Användarnamnet måste vara längre än 4 tecken.`);
+  }
+>>>>>>> 535b56071c544152e897246de265c06692a35e99
   model.findUser(req.body.userID)
     .then((maybeUser) => {
       if (maybeUser !== undefined) {

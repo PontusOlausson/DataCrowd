@@ -12,7 +12,26 @@
         <input class="btn btn-secondary" type="button" value="Login" v-on:click="login"/>
       </div>
     </div>
-    <input class="btn btn-secondary" type="button" value="Registrera användarnamn" v-on:click="register"/>
+    <input class="btn btn-link" type="button" value="Registrera användarnamn" data-toggle="modal" data-target="#registrationModal"/>
+    <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registrationModalLabel">Registrera ett nytt användarnamn</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body registrationModalBody">
+            <input class="form-control" type="text" v-model="registrationID" required />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
+            <input class="btn btn-primary" type="button" value="Registrera" v-on:click="register" data-dismiss="modal"/>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -29,8 +48,7 @@
               Syftet är att ge dig som användare rätt uppgifter att utföra, genom att hålla koll på din tidigare aktivitet.<br>
             </p>
             <p>
-              Har du inte fått ett användarnamn men vill vara med och bidra till arbetet? Toppen!
-              Hör av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se) så skapar vi ett åt dig!
+              Har du några frågor så är det bara att höra av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se).
             </p>
           </div>
           <div class="modal-footer">
@@ -48,6 +66,7 @@ export default {
   components: {},
   data: () => ({
     userID: '',
+    registrationID: '',
     statusText: '',
     status: null,
   }),
@@ -88,7 +107,7 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userID: this.userID,
+          userID: this.registrationID,
         }),
       })
         .then((resp) => {
