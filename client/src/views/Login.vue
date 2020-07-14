@@ -48,7 +48,7 @@
               Syftet är att ge dig som användare rätt uppgifter att utföra, genom att hålla koll på din tidigare aktivitet.<br>
             </p>
             <p>
-              Har du några frågo så är det bara att höra av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se).
+              Har du några frågor så är det bara att höra av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se).
             </p>
           </div>
           <div class="modal-footer">
