@@ -48,8 +48,7 @@
               Syftet är att ge dig som användare rätt uppgifter att utföra, genom att hålla koll på din tidigare aktivitet.<br>
             </p>
             <p>
-              Har du inte fått ett användarnamn men vill vara med och bidra till arbetet? Toppen!
-              Hör av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se) så skapar vi ett åt dig!
+              Har du några frågo så är det bara att höra av dig till Pontus Olausson (polaus@kth.se) eller Christoffer Linné (clinne@kth.se).
             </p>
           </div>
           <div class="modal-footer">
