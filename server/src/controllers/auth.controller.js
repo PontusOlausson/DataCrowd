@@ -98,6 +98,7 @@ router.post('/authenticate', (req, res) => {
  * @returns {void}
  */
 router.post('/registerUser', (req, res) => {
+  
   model.findUser(req.body.userID)
     .then((maybeUser) => {
       if (maybeUser !== undefined) {
@@ -108,7 +109,7 @@ router.post('/registerUser', (req, res) => {
       }
     })
     .catch((err) => {
-      throw err;
+      res.status(500).send(err.message);
     });
 });
 
